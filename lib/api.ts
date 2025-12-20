@@ -17,3 +17,11 @@ async function fetchWithTimeout(url: string,options: RequestInit = {}) {
 }
 
 const CF_API_BASE = 'https://codeforces.com/api';
+
+export async function fetchUserInfo(handle:string) {
+    const res = await fetchWithTimeout(`${CF_API_BASE}/user.info?handles=${handle}`);
+    if(!res.ok) throw new Error('Failed to fetch user info');
+    const data = await res.json();
+    if(data.status !== 'OK') throw new Error(data.comment || 'Failed to fetch user info');
+    return data.result[0];
+}
