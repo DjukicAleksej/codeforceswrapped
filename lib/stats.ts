@@ -255,5 +255,7 @@ export async function processUserStats(
         const month = date.substring(0,7); // format : yyyy-mm
         monthlySubmissions.set(month,(monthlySubmissions.get(month) || 0) + count);
     });
+    const mostActiveMonth = Array.from(monthlySubmissions.entries())
+    .reduce((a,b) => (a[1] > b[1] ? a : b))[0];
 
 }
