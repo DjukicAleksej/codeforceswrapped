@@ -70,5 +70,35 @@ function calculatePowerLevel(stats: {
             color: "text-orange-500",
             description: "Your power level is over 4000! Incredible mastery!"
         };
+    } else if(submissions >= 2000){
+        return {
+            title: "SAGE MODE 🌀",
+            color: "text-blue-400",
+            description: "You've achieved perfect harmony with the code!"
+        };
+    }  else if(submissions >= 1000){
+        return {
+            title: "ELITE CLASS ⚡",
+            color: "text-purple-500",
+            description: "Your dedication to competitive programming is outsdanding!"
+        };
+    }   else if(submissions >= 500){
+        return {
+            title: "NINJA 🥷",
+            color: "text-gray-300",
+            description: "Stealthily solving problems with precision!"
+        }; 
+    }   else if(submissions >= 100){
+        return {
+            title: "ADVENTURER 🌊",
+            color: "text-cyan-300",
+            description: "Embarking on an epic coding journey!"
+        }; 
+    } else {
+        return {
+            title: "ROOKIE 🌱",
+            color: "text-green-400",
+            description: "Beginning your path to greatness!"
+        };
     }
 }
