@@ -77,3 +77,14 @@ export const RATE_LIMIT = {
     windowMs: 60 * 1000, // 1 min
     maxRequests: 5,
 };
+
+async function fetchUserStats(handle: string){
+    try {
+        const currentYear = new Date().getFullYear();
+        const startDate = new Date(currentYear,0,1);//jan 1
+        const endDate = new Date(currentYear,11,31);//dec 31
+
+        const fromTimestamp = Math.floor(startDate.getTime()/1000);
+        const toTimestamp = Math.floor(endDate.getTime()/1000);
+    }
+}
