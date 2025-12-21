@@ -17,3 +17,12 @@ function getRankAndColor(rating: number): {rank: string; color: string} {
     if(rating < 3000) return { rank: 'International Grandmaster',color:'text-[#FF0000]'};
     return {rank: 'Legendary Grandmaster',color: 'text-[#FF0000]'};
 }
+
+function calculatePercentileRank(rating: number): number{
+    //Codeforces rating distribution approximation
+    const maxRating = 3800;
+    const currentRating = Math.max(rating,0);
+
+    //calculate percentile (lower is better, like actual ranks)
+    return Math.round((1-(currentRating/maxRating)) * 100);
+}
