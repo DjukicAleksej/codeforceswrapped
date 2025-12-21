@@ -40,3 +40,12 @@ export async function fetchUserSubmissions(handle: string){
 }
 return data.result;
 }
+
+export function generateContributionData(submissions: Submission[]) : Record<string,number> {
+    const contributionData : Record<string,number> = {};
+
+    const currentYear = new Date().getFullYear();
+    const startDate = new Date(currentYear,0,1);//jan 1st
+    const endDate = new Date(currentYear,11,31);//dec 31st
+    
+}
