@@ -188,4 +188,17 @@ function processSubmissionStats(submissions: Submission[]) {
             topLanguage = lang;
         }
     });
+
+    //get top tags
+    const topTags = Array.from(tagCount.entries())
+    .sort((a,b) => b[1] - a[1])
+    .slice(0,5)
+    .map(([tag]) => tag);
+
+    return {
+        topLanguage,
+        topTags,
+        languageStats: Object.fromEntries(languageCount),
+        tagStats: Object.fromEntries(tagCount)
+    };
 }
