@@ -26,3 +26,19 @@ function calculatePercentileRank(rating: number): number{
     //calculate percentile (lower is better, like actual ranks)
     return Math.round((1-(currentRating/maxRating)) * 100);
 }
+
+function calculateUniversalRank(rating: number): number {
+    if(rating === 0) return 100;
+
+    //codeforces uses these tresholds for the ranks
+    if(rating >= 3000) return 0.1;//Legendary Grandmaster
+    if(rating >= 2600) return 0.3;//international grandmaster
+    if(rating >= 2400) return 1;//grandmaster
+    if(rating >= 2300) return 2;//international master
+    if(rating >= 2100) return 5;//master
+    if(rating >= 1900) return 10;//candidate master
+    if(rating >= 1600) return 20;//expert
+    if(rating >= 1400) return 50;//specialist
+    if(rating >= 1200) return 70;//pupil
+    return 100;
+}
