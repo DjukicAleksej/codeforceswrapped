@@ -123,6 +123,32 @@ function calculateStreaks(contributionData: Record<string,number>) : {current: n
             currentStreak = 0;
         }
 
-        
+        //check if this is today or last submission
+        const submissionDate = new Date(date);
+        const today = new Date();
+        if(submissionDate.toDateString()=== today.toDateString()){
+            current = currentStreak;
+        }
     }
+    return {current , longest};
+}
+
+function calculateTopLanguage(submissions: Submission[]): string{
+    const languageCounts: Record <string,number> = {};
+
+    submissions.forEach(submission => {
+        const lang = submission.programmingLanguage;
+        languageCounts[lang] = (languageCounts[lang] || 0) + 1;
+    });
+
+    let topLanguage = 'Unknown';
+    let maxCount = 0;
+
+    Object.entries(languageCounts).forEach(([lang,count]) => {
+        if(count > maxCount){
+            maxCount = count;
+            topLanguage = lang;
+        }
+    });
+    return topLanguage;
 }
