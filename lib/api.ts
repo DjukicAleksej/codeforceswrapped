@@ -1,4 +1,4 @@
-import { clear } from 'console';
+import { clear, time } from 'console';
 import { CodeforcesUser , Submission} from './types';
 
 const FETCH_TIMEOUT = 10000;
@@ -62,4 +62,9 @@ export function generateContributionData(submissions: Submission[]) : Record<str
         }
     });
     return contributionData;
+}
+
+
+export function formatDate(timestamp: number): string {
+    return new Date(timestamp*1000).toISOString().split('T')[0];
 }
