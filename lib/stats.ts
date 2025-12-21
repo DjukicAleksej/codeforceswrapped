@@ -1,4 +1,4 @@
-import { CodeforcesUser,Submission,UserStats,PowerClass,RatingPoint }  from "./types";
+import { CodeforcesUser,Submission,UserStats,PowerClass }  from "./types";
 import {generateContributionData} from './api'
 
 
@@ -222,7 +222,7 @@ export async function processUserStats(
     //calculate universal rank
     const rankPercentile = calculatePercentileRank(user.rating);
 
-    const acceptedSubmissions = thisYearSubmissions.filter(s => s.verditc ==='OK');
+    const acceptedSubmissions = thisYearSubmissions.filter(s => s.verdict ==='OK');
 
     //process languages and tags
 
@@ -265,5 +265,44 @@ export async function processUserStats(
         acceptedSubmissions: acceptedSubmissions.length
     });
 
-    
+    const submissionStats = processSubmissionStats(submissions);
+
+    const ratingProgression = thisYearSubmissions
+    .filter(s => s.verdict === 'OK' && s.problem.rating !== undefined)
+    .map(s => ({
+        date: new Date(s.creationTimeSeconds*1000).toISOString().split('T')[0],
+        rating: s.problem.rating || 0
+    }))
+.sort((a,b) => a.date.localeCompare(b.date));
+
+
+return {
+    handle: user.handle,
+    totalSubmissions: Object.values(contributionData).reduce((a,b) => a+b,0),
+    acceptedSubmissions: acceptedSubmissions.length,
+    universalRank: calculateUniversalRank(user.rating),
+    problemsSolved: new Set(acceptedSubmissions.map(s => s.problem.contestId + s.problem.index)).size,
+    totalSolved: new Set(submissions.filter(s=>s.verdict==='OK').map(s=> s.problem.contestId + s.problem.index)).size,
+    longestStreak: streaks.longest,
+    mostActiveMonth,
+    mostActiveDay: mostActiveDate,
+    contributionData,
+    ratingProgression,
+    topLanguage: submissionStats.topLanguage,
+    topTags: submissionStats.topTags,
+    languageStats: submissionStats.languageStats,
+    tagStats: submissionStats.tagStats,
+    lastUpdated: new Date(),
+    PowerClass,
+    rating: {
+        current: user.rating,
+        maxRating: user.maxRating,
+        currentRating: user.rating,
+        currentRank: getRankAndColor(user.rating).rank,
+        maxRank: getRankAndColor(user.maxRating).rank,
+        currentColor: getRankAndColor(user.rating).color,
+        maxColor: getRankAndColor(user.maxRating).color
+    },
+    profilePicture: ''
+};
 }

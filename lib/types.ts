@@ -34,7 +34,7 @@ export interface UserStats {
     acceptedSubmissions: number;
     mostActiveDay: string;
     mostActiveMonth: string;
-    powerClass: {
+    PowerClass: {
         title: string;
         description: string;
         color: string;
@@ -55,6 +55,7 @@ export interface UserStats {
     problemsSolved: number;
     totalSolved: number;
     topTags: string[];
+    topLanguage: string;
     languageStats: Record<string,number>;
     tagStats: Record<string,number>;
     lastUpdated: Date;
