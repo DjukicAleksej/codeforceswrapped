@@ -1,4 +1,4 @@
-export interface CodeforceUser {
+export interface CodeforcesUser {
     handle: string;
     rating: number;
     maxRating: number;
@@ -13,7 +13,8 @@ export interface Submission {
     contestId?: number;
     creationTimeSeconds: number;
     programmingLanguage: string;
-    verdict: {
+    verdict: string;
+    problem: {
         contestId?: number;
         index: string;
         name: string;

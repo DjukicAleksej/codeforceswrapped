@@ -25,3 +25,18 @@ export async function fetchUserInfo(handle:string) {
     if(data.status !== 'OK') throw new Error(data.comment || 'Failed to fetch user info');
     return data.result[0];
 }
+
+export async function fetchUserSubmissions(handle: string){
+    const res = await fetch (`${CF_API_BASE}/user.status?handle=${handle}`);
+
+    if (!res.ok) {
+        throw new Error('Failed to fetch submissions');
+
+    }
+
+    const data = await res.json();
+    if(data.status === 'FAILED'){
+        throw new Error(data.comment || 'Failed to fetch submissions');
+}
+return data.result;
+}
