@@ -86,5 +86,23 @@ async function fetchUserStats(handle: string){
 
         const fromTimestamp = Math.floor(startDate.getTime()/1000);
         const toTimestamp = Math.floor(endDate.getTime()/1000);
+
+        //Fetch submissions for the entire year
+        const submissionsResponse = await fetch(
+            `https://codeforces.com/api/user.status?handle=${handle}&from=${fromTimestamp}&to=${toTimestamp}`
+        );
+        const submissionsData = await submissionsResponse.json();
+        if(submissionsData.status !== 'OK') {
+            throw new Error('Failed to fetch submissions');
+        }
+        //process submissions to create contribution data 
+        const contributionData: Record<string,number> = {};
+
+        //initialize all dates for the entire year
+        for(let d = new Date(startDate); d<= endDate;d.setDate(d.getDate()+1)){
+            const dateStr = d.toISOString().split('T')[0];
+            contributionData[dateStr] = 0;
+        }
+        
     }
 }
