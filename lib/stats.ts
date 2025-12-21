@@ -229,5 +229,15 @@ export async function processUserStats(
     const languageCount = new Map<string,number>();
     const tagCount = new Map<string,number>();
 
-    
+
+    thisYearSubmissions.forEach(submission => {
+        languageCount.set(
+            submission.programmingLanguage,
+            (languageCount.get(submission.programmingLanguage) || 0) + 1
+        );
+        submission.problem.tags.forEach(tag => {
+            tagCount.set(tag, (tagCount.get(tag) || 0) + 1);
+        });
+    });
+
 }
