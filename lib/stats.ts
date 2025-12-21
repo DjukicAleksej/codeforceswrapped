@@ -41,4 +41,10 @@ function calculateUniversalRank(rating: number): number {
     if(rating >= 1400) return 50;//specialist
     if(rating >= 1200) return 70;//pupil
     return 100;
+    
+}
+
+
+function getRankPercentage(rank:string) : number {
+    return parseFloat(rank.replace('%', ''));
 }
