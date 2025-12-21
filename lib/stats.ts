@@ -178,4 +178,14 @@ function processSubmissionStats(submissions: Submission[]) {
             });
         }
     });
+
+    //get top lang
+    let topLanguage = 'Unknown';
+    let maxLangCount = 0;
+    languageCount.forEach((count,lang)=> {
+        if(count > maxLangCount) {
+            maxLangCount = count;
+            topLanguage = lang;
+        }
+    });
 }
