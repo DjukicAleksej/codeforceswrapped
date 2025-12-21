@@ -47,5 +47,19 @@ export function generateContributionData(submissions: Submission[]) : Record<str
     const currentYear = new Date().getFullYear();
     const startDate = new Date(currentYear,0,1);//jan 1st
     const endDate = new Date(currentYear,11,31);//dec 31st
-    
+
+    for(let d = new Date(startDate); d <= endDate;d.setDate(d.getDate() + 1)){
+        const dateStr = d.toISOString().split('T')[0];
+        contributionData[dateStr] = 0;
+    }
+
+    submissions.forEach(submission => {
+        const date = new Date(submission.creationTimeSeconds * 1000);
+        //only count from current year
+        if(date.getFullYear() === currentYear){
+            const dateStr = date.toISOString().split('T')[0];
+            contributionData[dateStr] = (contributionData[dateStr] || 0) + 1;
+        }
+    });
+    return contributionData;
 }
