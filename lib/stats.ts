@@ -102,3 +102,27 @@ function calculatePowerLevel(stats: {
         };
     }
 }
+
+function calculateStreaks(contributionData: Record<string,number>) : {current: number,longest: number}{
+    let current = 0;
+    let longest = 0;
+    let currentStreak = 0;
+
+    //convert to array and sort by date
+    const sortedDates = Object.entries(contributionData)
+    .sort((a,b) => a[0].localeCompare(b[0]));
+
+    //calculate streaks
+    for(let i = 0;i< sortedDates.length;i++) {
+        const [date, count] = sortedDates[i];
+
+        if(count > 0){
+            currentStreak++;
+            longest = Math.max(longest,currentStreak);
+        } else {
+            currentStreak = 0;
+        }
+
+        
+    }
+}
