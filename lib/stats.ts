@@ -202,3 +202,32 @@ function processSubmissionStats(submissions: Submission[]) {
         tagStats: Object.fromEntries(tagCount)
     };
 }
+
+//Main function
+
+export async function processUserStats(
+    user: CodeforcesUser,
+    submissions: Submission[]
+): Promise<UserStats> {
+    //filter submissions from current year
+    const currentYear = new Date().getFullYear();
+    const thisYearSubmissions = submissions.filter(submission => {
+        const submissionDate = new Date(submission.creationTimeSeconds*1000);
+        return submissionDate.getFullYear() === currentYear;
+    });
+
+    //generate contribution data from submissions
+    const contributionData = generateContributionData(submissions);
+
+    //calculate universal rank
+    const rankPercentile = calculatePercentileRank(user.rating);
+
+    const acceptedSubmissions = thisYearSubmissions.filter(s => s.verditc ==='OK');
+
+    //process languages and tags
+
+    const languageCount = new Map<string,number>();
+    const tagCount = new Map<string,number>();
+
+    
+}
