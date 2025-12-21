@@ -240,4 +240,20 @@ export async function processUserStats(
         });
     });
 
+    //Calculate streaks
+    const streaks = calculateStreaks(contributionData);
+
+    //find mmost active day
+
+    const submissionsByDate = new Map(Object.entries(contributionData));
+    const mostActiveDate = Array.from(submissionsByDate.entries())
+    .reduce((a, b) => (a[1] > b[1] ? a : b))[0];
+
+    //Find most active ,onth
+    const monthlySubmissions = new Map<string , number>();
+    Object.entries(contributionData).forEach(([date,count]) => {
+        const month = date.substring(0,7); // format : yyyy-mm
+        monthlySubmissions.set(month,(monthlySubmissions.get(month) || 0) + count);
+    });
+
 }
