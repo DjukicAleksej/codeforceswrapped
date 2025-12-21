@@ -68,3 +68,12 @@ export function generateContributionData(submissions: Submission[]) : Record<str
 export function formatDate(timestamp: number): string {
     return new Date(timestamp*1000).toISOString().split('T')[0];
 }
+
+export function getAcceptedSubmissions(submissions: Submission[]) : Submission[] {
+    return submissions.filter(sub => sub.verdict ==='OK');
+}
+
+export const RATE_LIMIT = {
+    windowMs: 60 * 1000, // 1 min
+    maxRequests: 5,
+};
