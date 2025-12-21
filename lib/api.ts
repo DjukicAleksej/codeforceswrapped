@@ -111,5 +111,15 @@ async function fetchUserStats(handle: string){
                 contributionData[dateStr] = (contributionData[dateStr] || 0) + 1;
             }
         });
+        const stats = {
+            contributionData: contributionData
+        };
+        return {
+            ...stats,
+            contributionData
+        };
+    } catch (error){
+        console.error('Error fetching user stats:',error);
+        throw error;
     }
 }
