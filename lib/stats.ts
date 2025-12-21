@@ -258,4 +258,12 @@ export async function processUserStats(
     const mostActiveMonth = Array.from(monthlySubmissions.entries())
     .reduce((a,b) => (a[1] > b[1] ? a : b))[0];
 
+    //calculate power calss
+    const PowerClass = calculatePowerLevel({
+        universalRank: calculateUniversalRank(user.rating),
+        totalSubmissions: Object.values(contributionData).reduce((a,b) => a+b,0),
+        acceptedSubmissions: acceptedSubmissions.length
+    });
+
+    
 }
