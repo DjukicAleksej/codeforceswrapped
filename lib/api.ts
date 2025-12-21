@@ -103,6 +103,13 @@ async function fetchUserStats(handle: string){
             const dateStr = d.toISOString().split('T')[0];
             contributionData[dateStr] = 0;
         }
-        
+        //count submissions for each date
+        submissionsData.result.forEach((submission:any) => {
+            const date = new Date(submission.creationTimeSeconds*1000);
+            if(date >= startDate && date <= endDate) {
+                const dateStr = date.toISOString().split('T')[0];
+                contributionData[dateStr] = (contributionData[dateStr] || 0) + 1;
+            }
+        });
     }
 }
