@@ -152,3 +152,30 @@ function calculateTopLanguage(submissions: Submission[]): string{
     });
     return topLanguage;
 }
+
+
+function processSubmissionStats(submissions: Submission[]) {
+    const languageCount = new Map<string, number>();
+    const tagCount = new Map<string, number>();
+
+    const thisYearSubmissions = submissions.filter(sub =>{
+        const subDate = new Date(sub.creationTimeSeconds * 1000);
+        return subDate.getFullYear() === new Date().getFullYear();
+    });
+
+    thisYearSubmissions.forEach(submission => {
+        //process programming  language
+        if(submission.programmingLanguage) {
+            languageCount.set(
+                submission.programmingLanguage,
+                (languageCount.get(submission.programmingLanguage) || 0) + 1
+            );
+        }
+        //proces problem tags safely
+        if(submission.problem.tags && Array.isArray(submission.problem.tags)){
+            submission.problem.tags.forEach(tag => {
+                tagCount.set(tag, (tagCount.get(tag) || 0) + 1);
+            });
+        }
+    });
+}
