@@ -48,3 +48,27 @@ function calculateUniversalRank(rating: number): number {
 function getRankPercentage(rank:string) : number {
     return parseFloat(rank.replace('%', ''));
 }
+
+function calculatePowerLevel(stats: {
+    universalRank: number;
+    totalSubmissions: number;
+    acceptedSubmissions: number;
+}) : PowerClass {
+    //calculate based primarily on total submissions
+    const submissions  = stats.totalSubmissions;
+
+    if(submissions >= 9000){
+        return {
+            title: "GOD MODE ⚡",
+            color: "text-yellow-400",
+            description: "Absolutely legendary! You've transcended mortal coding limits!"
+        };
+
+    }else if(submissions >= 4000){
+        return {
+            title: "SUPER SAIYAN 🔥 💥",
+            color: "text-orange-500",
+            description: "Your power level is over 4000! Incredible mastery!"
+        };
+    }
+}
