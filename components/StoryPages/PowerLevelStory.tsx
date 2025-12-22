@@ -30,8 +30,29 @@ export default function PowerLevelStory({stats,onNext}: PowerLevelStoryProps){
                     <p className="text-gray-400">Based on your incredible achievements</p>
 
                 </motion.div>
-                
+                <motion.div
+                initial={{scale:0.8,opacity: 0}}
+                animate={{scale: isVisible ? 1 : 0.8,opacity: isVisible ? 1 : 0}}
+                transition={{delay: 0.5,duration: 1}}
+                className="space-y-8 text-center"
+                >
+                    <div className="flex justify-center">
+                        <div className="relative w-40 h-40 rounded-full bg-gradient-to-r from-yellow-500 to-red-500 p-1 animate-pulse">
+                            <div className="w-full h-full rounded-full bg-black flex items-center justify=center">
+                                <Zap className="w-20 h-20 text-white" />
+
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h2 className={`text-5xl font-bold ${stats.PowerClass.color} mb-4`}>
+                            {stats.PowerClass.title}
+                        </h2>
+                        <p className="text-xl text-gray-400">{stats.PowerClass.description}</p>
+                    </div>
+
+                </motion.div>
             </div>
         </div>
-    )
+    );
 }
