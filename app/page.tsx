@@ -45,5 +45,37 @@ export default function Home(){
         { handle: "Um_nik", description: "Expert Problem Solver", image: "/assets/umnik.jpg" },
         { handle: "Radewoosh", description: "Top Competitive Programmer", image: "/assets/radewoosh.jpg" }
 
-    ]
+    ];
+    const copyToClipboard = async () => {
+        try {
+            await navigator.clipboard.writeText('40488690');
+            setShowCopied(true);
+            setTimeout(() => setShowCopied(false), 2000);
+        } catch {
+            toast.error(`Failed to copy`);
+        }
+    };
+
+    return (
+        <main className ="min-h-screen bg-gradient-to-b from-background to-secondary/20">
+            <div className="container mx-auto px-4 py-16 flex flex-col items-center">
+                <div className="text-center mb-12">
+                    <h1 className="text-4xl font-bold mb-4">Codeforces Wrapped</h1>
+                    <p className="text-xl text-muted-foreground mb-8">
+                        Discover your competitive programming journey in 2025
+                    </p>
+                    <div className="max-w-md mx-auto">
+                        <form onSubmit={generateWrapped} className="flex gap-2 mb-4">
+                            <Input 
+                            placeholder="Enter your Codeforces handle"
+                            value = {handle}
+                            onChange={(e) => setHandle(e.target.value)}
+                            className="text-lg"
+                            />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+    )
 }
