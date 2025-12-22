@@ -82,7 +82,32 @@ export default function Home(){
                                 </Button>
 
                         </form>
+                        <p className ="text-sm text-muted-foreground">
+                            Best viewed on desktop
+                        </p>
                     </div>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl w-full">
+                    <h2 className="text-2xl font-semibold col-span-full mb-4">Featured Profiles</h2>
+                    {featuredUsers.map((user) =>  (
+                        <Link 
+                        key={user.handle}
+                        href={`/wrapped/${user.handle}`}
+                        className="group relative overflow-hidden p-4 bg-[#1a1d24] rounded-xl transition-all duration-500 hover:bg-[#22262e] hover:scale-[1.02] hover:-translate-y-1 hover:shadow-xl"
+                        >
+                            <div className="flex items-center gap-3">
+                                <div className="relative h-12 w-12 rounded-full overflow-hidden">
+                                    <Image
+                                    src={user.image}
+                                    alt={`${user.handle}'s avatar`}
+                                    fill
+                                    className="object-cover transform transition-transform duration-500 group-hover:scale-110"
+                                    />
+                                </div>
+                                
+                            </div>
+                        </Link>
+                    ))}
                 </div>
             </div>
         </main>
