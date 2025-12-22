@@ -29,6 +29,46 @@ export default function RatingJourney({stats,onNext}: RatingJourneyProps){
                     <p className="text-gray-400">Your competitive achievements</p>
 
                 </motion.div>
+
+                <div className="grid grid-cols-2 gap-6">
+                    {/*current rating tile*/}
+                    <motion.div
+                    initial={{scale:0.8,opacity: 0}}
+                    animate={{scale: isVisible ? 1 : 0.8, opacity: isVisible ? 1 : 0}}
+                    whileHover={{
+                        scale: 1.05,
+                        transition: {duration: 0.2}
+                    }}
+                    transition={{delay: 0.3,duration: 0.8}}
+                    className="bg-gradient-to-br from-blue-600/30 to-indigo-600/30 p-6 rounded-xl
+                               hover:from-blue-500/40 hover:to-indigo-500/40
+                               transition-all duration-300 shadow-lg hover:shadow-blue-500/20
+                               cursor-pointer transform-gpu"
+                    >
+                        <div className="flex flex-col items-center space-y-4">
+                            <motion.div
+                            className="p-3 bg-blue-500/30 rounded-full shadow-inner shadow-blue-400/20 backdrop-blur-sm"
+                            whileHover={{
+                                rotate: 360,
+                                transition: {duration: 0.6}
+                            }}
+                            >
+                                <TrendingUp className="w-8 h-8 text-blue-300" />
+
+                            </motion.div>
+                            <div className="text-center">
+                                <p className="text-blue-200/80 mb-1 font-medium">Current Rating</p>
+                                <h2 className={`text-4xl font-bold ${stats.rating.currentColor} drop-shadow-lg`}>
+                                    {stats.rating.current}
+                                </h2>
+                                <p className={`text-sm mt-1 ${stats.rating.currentColor} font-medium`}>
+                                    {stats.rating.currentRank}
+                                </p>
+                            </div>
+                        </div>
+
+                    </motion.div>
+                </div>
             </div>
         </div>
     )
