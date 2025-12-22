@@ -54,4 +54,35 @@ export default function StoryContainer({stats,onComplete,onSkip}: StoryContainer
             setProgress(0);
         }
     },[currentPage]);
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setProgress(prev => {
+                if(prev >= 100) {
+                    goToNextPage();
+                    return 0;
+                }
+                return prev + (100/ (STORY_DURATION / 100));
+            });
+        }, 100);
+        return () => clearInterval(timer);
+    },[currentPage,goToNextPage]);
+
+    useEffect(() => {
+        const handleKeyPress = (e: KeyboardEvent) => {
+            switch(e.key){
+                case 'ArrowRight':
+                case 'Space':
+                    goToNextPage();
+                    break;
+                case 'ArrowLeft':
+                    goToPrevPage();
+                    break;
+                case 'Escape':
+                    onSkip();
+                    break;
+            }
+        };
+        
+    })
 }
