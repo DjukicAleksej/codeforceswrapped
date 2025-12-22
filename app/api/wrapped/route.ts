@@ -78,6 +78,24 @@ export async function GET(request: Request) {
     ]);
     const stats = await processUserStats(userInfo, submissions);
     //combine all data
-    
-    }
+    const combinedStats = {
+        ...stats,
+        handle,///explicitly include handle
+        profilePicture: ratingInfo?.profilePicture || null,
+        rating: ratingInfo?.rating || {
+            current: 0,
+            maxRating: 0,
+            currentRank: 'Unrated',
+            maxRank: 'Unrated',
+            currentColor: 'text-gray-500',
+            maxColor: 'text-gray-500'
+        }
+    };
+    return new Response(JSON.stringify(combinedStats));
+} catch (error) {
+    console.error('Error fetching stats:',error);
+    return new Response(JSON.stringify({error: 'Failed to fetch stats'}), {
+        status: 500,
+    });
+}
 }
