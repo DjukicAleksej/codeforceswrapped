@@ -56,3 +56,28 @@ async function getUserInfo(handle: string) {
         return null;
     }
 }
+
+export async function GET(request: Request) {
+    const { searchParams } = new URL(request.url);
+    const handle = searchParams.get('handle');
+
+    if(!handle) {
+        return new Response(JSON.stringify({error: 'Handle is required!'}), {
+            status: 400,
+        });
+    }
+
+    try {
+
+        //fetch user rating and profile info
+        const ratingInfo = await getUserInfo(handle);
+    //fetch fresh data
+    const [userInfo,submissions] = await Promise.all([
+        fetchUserInfo(handle),
+        fetchUserSubmissions(handle)
+    ]);
+    const stats = await processUserStats(userInfo, submissions);
+    //combine all data
+    
+    }
+}
