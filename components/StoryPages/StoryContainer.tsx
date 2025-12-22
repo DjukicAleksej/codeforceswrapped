@@ -38,4 +38,20 @@ export default function StoryContainer({stats,onComplete,onSkip}: StoryContainer
         {id: 7, component: PowerLevelStory},
         {id: 8, component: FinalTransition}
     ];
+    const goToNextPage = useCallback(() => {
+        if(currentPage===stories.length -1) {
+            onComplete();
+        } else {
+            setCurrentPage(p => p + 1);
+            setProgress(0);
+        }
+    },[currentPage,onComplete,stories.length]);
+
+
+    const goToPrevPage = useCallback(() => {
+        if(currentPage > 0){
+            setCurrentPage(p => p -1);
+            setProgress(0);
+        }
+    },[currentPage]);
 }
