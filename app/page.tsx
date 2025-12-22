@@ -20,7 +20,22 @@ export default function Home(){
     const generateWrapped = async (e: React.FormEvent) => {
         e.preventDefault();
         if(!handle){
+            toast.error("Please enter a Codeforces handle");
+        return;        
+    }
+    setLoading(true);
+    try{
+        const res = await fetch(`/api/stats?handle=${handle}`);
+        const data = await res.json();
 
-        }
+        if(!res.ok) throw new Error(data.error || 'Failed to fetch user data');
+
+        router.push(`/wrapped/${handle}`);
+    } catch(error:any) {
+        toast.error(error.message || 'Something went wrong');
+
+    } finally {
+        setLoading(false);
+    }
     }
 }
