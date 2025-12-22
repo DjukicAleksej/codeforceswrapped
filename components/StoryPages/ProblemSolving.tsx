@@ -49,7 +49,12 @@ export default function ProblemSolving({stats,onNext}: ProblemSolvingProps){
                             Problems Solved
                         </p>
                     </div>
-                    
+                    <div className="bg-white/5 rounded-xl p-6 text-center">
+                        <h3 className="text-5xl font-bold text-blue-400 mb-2">
+                            {stats.totalSubmissions}
+                        </h3>
+                        <p className="text-gray-400">Total Submissions</p>
+                    </div>
 
                 </motion.div>
             </div>
