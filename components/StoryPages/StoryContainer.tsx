@@ -83,6 +83,20 @@ export default function StoryContainer({stats,onComplete,onSkip}: StoryContainer
                     break;
             }
         };
-        
-    })
+        window.addEventListener('keydown',handleKeyPress);
+        return () => window.removeEventListener('keydown',handleKeyPress);
+
+    }, [currentPage,goToNextPage,goToPrevPage,onSkip]);
+
+    useEffect(() => {
+        return () => {
+            const audio = document.querySelector('audio');
+            if(audio) {
+                audio.pause();
+                audio.currentTime = 0;
+            }
+        };
+    }, []);
+
+    
 }
