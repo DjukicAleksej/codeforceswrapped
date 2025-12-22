@@ -86,8 +86,18 @@ export default function RatingJourney({stats,onNext}: RatingJourneyProps){
                                 transition: {duration: 0.6}
                             }}
                             >
+                                <Trophy className="w-8 h-8 text-orange-300" />
+
 
                             </motion.div>
+                            <div className="text-center">
+                                <p className="text-orange-200/80 mb-1 font-medium">
+                                Max Rating
+                                </p>
+                                <h2 className={`text-4xl font-bold ${stats.rating.maxColor} drop-shadow-kg`}>
+                                    {stats.rating.maxRank}
+                                </h2>
+                            </div>
                         </div>
 
                     </motion.div>
