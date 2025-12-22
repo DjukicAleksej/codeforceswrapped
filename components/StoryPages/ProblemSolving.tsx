@@ -57,6 +57,21 @@ export default function ProblemSolving({stats,onNext}: ProblemSolvingProps){
                     </div>
 
                 </motion.div>
+                <motion.div
+                initial={{opacity: 0,y:20}}
+                animate={{opacity: isVisible ? 1 : 0,y: isVisible ? 0:20}}
+                transition={{delay: 1,duration: 0.8}}
+                className="text-center"
+                >
+                    <p className="text-2xl text-white mb-4">
+                        That&apo;s an average of{" "}
+                        <span className="text-purple-400">
+                            {averageText} submissions
+                        </span>{" "}
+                        per day!
+                    </p>
+
+                </motion.div>
             </div>
         </div>
     )
