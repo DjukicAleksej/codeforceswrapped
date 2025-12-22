@@ -68,6 +68,29 @@ export default function RatingJourney({stats,onNext}: RatingJourneyProps){
                         </div>
 
                     </motion.div>
+                    <motion.div
+                    initial={{scale: 0.8,opacity: 0}}
+                    animate={{scale: isVisible ? 1 : 0.8, opacity: isVisible ? 1 : 0}}
+                    whileHover={{
+                        scale: 1.05,
+                        transition: {duration: 0.2}
+                    }}
+                    transition={{delay: 0.5,duration: 0.8}}
+                    className="bg-gradient-to-br from-orange-600/30 to-rose-600/30 p-6 roundex-xl hover:from-orange-500/40 hover:to-rose-500/40 transition-all duration-300 shadow-ls hover:shadow-orange-500/20 cursor-pointer transform-gpu"
+                    >
+                        <div className="flex flex-col items-center space-y-4">
+                            <motion.div
+                            className="p-3 bg-orange-500/30 rounded-full shadow-inner shadow-orange-400/20 backdrop-blur-sm"
+                            whileHover={{
+                                rotate: 360,
+                                transition: {duration: 0.6}
+                            }}
+                            >
+
+                            </motion.div>
+                        </div>
+
+                    </motion.div>
                 </div>
             </div>
         </div>
