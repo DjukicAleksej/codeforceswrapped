@@ -22,3 +22,20 @@ interface StoryContainerProps{
 }
 
 const STORY_DURATION  = 10000;//10 seconds per story
+
+export default function StoryContainer({stats,onComplete,onSkip}: StoryContainerProps){
+    const [currentPage, setCurrentPage]= useState(0);
+    const [progress, setProgress]= useState(0);
+
+
+    const stories = [
+        {id: 1, component: IntroStory},
+        {id: 2, component: Languages},
+        {id: 3, component: ProblemSolving},
+        {id: 4, component: TopTags},
+        {id: 5, component: Streaks},
+        {id: 6, component: RatingJourney},
+        {id: 7, component: PowerLevelStory},
+        {id: 8, component: FinalTransition}
+    ];
+}
