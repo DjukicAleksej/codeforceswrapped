@@ -3,7 +3,7 @@
 import {useState,useEffect,useCallback} from 'react';
 import {motion,AnimatePresence} from 'framer-motion';
 import { UserStats } from '@/lib/types'; 
-import {X, ChevronLeft,ChevronRight} from 'lucide-react';
+import {X, ChevronLeft,ChevronRight, CirclePercent} from 'lucide-react';
 import IntroStory from './IntroStory';
 import CodingArsenal from './CodingArsenal';
 import ProblemSolving from './ProblemSolving';
@@ -114,6 +114,12 @@ export default function StoryContainer({stats,onComplete,onSkip}: StoryContainer
                 ))}
             </div>
             {/* Navigation buttons*/}
+            <button 
+            onClick={goToNextPage}
+            className={`absolute right-4 top-1/2 -translate-y-1/2 z-10 p-2 text-white hover:opacity-80 transition-opacity ${currentPage=== 0 ? 'opacity-0 pointer-events-none': 'opacity-50 hover:opacity-100'}`}
+            >
+                <ChevronLeft size={32} />
+            </button>
         </div>
     )
 }
