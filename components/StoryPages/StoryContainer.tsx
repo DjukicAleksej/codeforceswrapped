@@ -98,5 +98,22 @@ export default function StoryContainer({stats,onComplete,onSkip}: StoryContainer
         };
     }, []);
 
-    
+    return (
+        <div className="fixed inset-0 bg-black z-50">
+            {/*BG MUSIC */}
+            {/*Progress bars*/}
+            <div className="absolute top-0 left-0 right-0 flex gap-1 p-2 z-10">
+                {stories.map((_,idx) => (
+                    <div key={idx} className="h-1 flex-1 bg-gray-800 rounded overflow-hidden">
+                        <div className="h-full bg-white transition-all duration-100"
+                        style={{
+                            width: `${idx===currentPage ? progress : idx < currentPage ? 100 : 0}%`
+                        }}
+                        />
+                    </div>
+                ))}
+            </div>
+            {/* Navigation buttons*/}
+        </div>
+    )
 }
