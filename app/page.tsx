@@ -72,6 +72,15 @@ export default function Home(){
                             onChange={(e) => setHandle(e.target.value)}
                             className="text-lg"
                             />
+                            <Button 
+                            type="submit"
+                            disabled={loading}
+                            size="lg"
+                            className="bg-primary hover:bg-primary/90"
+                            >
+                                {loading ? 'Loading...' : 'Generate My Wrapped'}
+                                </Button>
+
                         </form>
                     </div>
                 </div>
