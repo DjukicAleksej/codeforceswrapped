@@ -37,7 +37,32 @@ export default function TopTags({stats,onNext}: TopTagsProps){
                     <h1 className="text-4xl font-bold text-white mb-4">Your Top Topics</h1>
                     <p className="text-gray-400">You mastered these problem categories</p>
                 </motion.div>
+
+                <motion.div
+                initial={{scale: 0.8,opacity: 0}}
+                animate={{scale: isVisible ? 1 : 0.8,opacity: isVisible ? 1 : 0}}
+                transition = {{delay:0.5,duration: 1}}
+                className="space-y-4"
+                >
+                    {stats.topTags.slice(0,5).map((tag,index)=> (
+                        <motion.div
+                            key={tag}
+                            initial={{x: -50,opacity: 0}}
+                            animate={{x:0,opacity: 1}}
+                            transition={{delay: 0.7 + index * 0.1}}
+                            className={`bg-gradient-to-r ${tagColors[index]} p-4 roundex-xl flex items-center justify-between`}
+                        >
+                            <div className="flex items-center gap-3">
+                                <Tag className="w-6 h-6 text-white" />
+                                <span className="text-white font-medium">{tag}</span>
+                            </div>
+                            <span className="text-white/80">
+                            {stats.tagStats[tag]} problems
+                            </span>
+                        </motion.div>
+                    ))}
+                </motion.div>
             </div>
         </div>
-    )
+    );
 }
