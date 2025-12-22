@@ -104,12 +104,37 @@ export default function Home(){
                                     className="object-cover transform transition-transform duration-500 group-hover:scale-110"
                                     />
                                 </div>
-                                
+                                <div className="transform transition-all duration-500 group-hover:translate-x-1">
+                                      <h3 className="text-white font-medium">{user.handle}</h3>
+                                      <p className="text-gray-400 text-sm">{user.description}</p>
+                                </div>
                             </div>
+                              <ChevronRight className="absolute right-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-600 transform transition-all duration-500 group-hover:translate-x-1 group-hover:text-white" />
                         </Link>
                     ))}
                 </div>
+                <footer className="mt-8 text-center space-y-4">
+                    <div className="flex justify-center space-x-6 text-sm">
+                        <Link 
+                        href="https://github.com/DjukicAleksej"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-gray-400 hover:text-white transition-colors"
+                        >
+                            Created by Aleksej Djukic 🇧🇦
+                        </Link>
+                        <Link
+                        href="https://github.com/DjukicAleksej/codeforceswrapped/issues"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-gray-400 hover:text-white transition-colors"
+                        >
+                            Request a feature ⚡️ or report a bug 🐛
+                        </Link>
+                    </div>
+                </footer>
             </div>
+            <Toaster />
         </main>
-    )
+    );
 }
