@@ -37,5 +37,13 @@ export default function Home(){
     } finally {
         setLoading(false);
     }
-    }
+    };
+    const featuredUsers = [
+        {handle: "tourist" , description:"Legendary Competitive Programmer",    image:"/assets/tourist.jpg"},
+        {handle: "jiangly", description: "Competitive Programming Expert", image: "/assets/jiangly.jpg"},
+        { handle: "Benq", description: "USACO Guide Contributor", image: "/assets/benq.jpg" },
+        { handle: "Um_nik", description: "Expert Problem Solver", image: "/assets/umnik.jpg" },
+        { handle: "Radewoosh", description: "Top Competitive Programmer", image: "/assets/radewoosh.jpg" }
+
+    ]
 }
