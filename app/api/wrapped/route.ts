@@ -38,6 +38,21 @@ async function getUserInfo(handle: string) {
                 profilePicture = profilePicture.replace(/^http:/,'https:');
             }
             
+            return {
+                profilePicture,
+                rating: {
+                    current: currentRating,
+                    maxRating: maxRating,
+                    currentRank: currentRankInfo.rank,
+                    maxRank: maxRankInfo.rank,
+                    currentColor: currentRankInfo.color,
+                    maxColor: maxRankInfo.color
+                }
+            };
         }
+        return null;
+    } catch (error) {
+        console.error('Error fetching user info:',error);
+        return null;
     }
 }
