@@ -59,8 +59,59 @@ export default function Languages({stats, onNext}: LanguagesProps){
                         </div>
                      </div>
                 </motion.div>
-                
+                {stats.languageStats&&(
+                        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 20 }}
+            transition={{ delay: 0.6, duration: 0.8 }}
+            className="grid grid-cols-2 gap-3"
+          >
+            {Object.entries(stats.languageStats)
+              .sort(([, a], [, b]) => b - a)
+              .slice(0, 4)
+              .map(([language, count], index) => {
+                const gradients = [
+                  'from-purple-600/30 to-pink-600/30 hover:from-purple-500/40 hover:to-pink-500/40 border-purple-500/30',
+                  'from-blue-600/30 to-cyan-600/30 hover:from-blue-500/40 hover:to-cyan-500/40 border-blue-500/30',
+                  'from-emerald-600/30 to-teal-600/30 hover:from-emerald-500/40 hover:to-teal-500/40 border-emerald-500/30',
+                  'from-orange-600/30 to-amber-600/30 hover:from-orange-500/40 hover:to-amber-500/40 border-orange-500/30'
+                ];
+
+                const textColors = [
+                  'text-purple-300',
+                  'text-blue-300',
+                  'text-emerald-300',
+                  'text-orange-300'
+                ];
+
+                return (
+                  <motion.div 
+                    key={language}
+                    initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    transition={{ 
+                      delay: 0.8 + index * 0.1,
+                      duration: 0.5,
+                      type: "spring",
+                      stiffness: 100
+                    }}
+                    whileHover={{ 
+                      scale: 1.05,
+                      transition: { duration: 0.2 }
+                    }}
+                    className={`bg-gradient-to-br ${gradients[index]} 
+                               p-3 rounded-lg transition-all transform-gpu cursor-pointer
+                               border backdrop-blur-sm shadow-lg`}
+                  >
+                    <p className={`${textColors[index]} text-sm mb-1 font-medium`}>{language}</p>
+                    <p className="text-2xl font-bold text-white">{count}</p>
+                    <p className="text-xs text-gray-400">submissions</p>
+                  </motion.div>
+                );
+            })}
+          </motion.div>
+                )}
             </div>
         </div>
-    )
+    );
 }
