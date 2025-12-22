@@ -34,6 +34,24 @@ export default function ProblemSolving({stats,onNext}: ProblemSolvingProps){
                     <h1 className="text-4xl font-bold text-white mb-4">Problem Solving Journey</h1>
                     <p className="text-gray-400"> Here&apos;s what you achieved this year</p>
                 </motion.div>
+
+                <motion.div
+                initial={{scale: 0.8,opacity: 0}}
+                animate={{scale: isVisible ? 1 : 0.8,opacity: isVisible ? 1 : 0}}
+                transition={{delay: 0.5,duration: 1}}
+                className="grid grid-cols-2 gap-6"
+                >
+                    <div className="bg-white/5 roundex-xl p-6 text-center">
+                        <h3 className="text-5xl font-bold text-green-400 mb-2">
+                            {stats.problemsSolved}
+                        </h3>
+                        <p className="text-gray-400">
+                            Problems Solved
+                        </p>
+                    </div>
+                    
+
+                </motion.div>
             </div>
         </div>
     )
