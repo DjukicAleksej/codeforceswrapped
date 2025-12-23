@@ -46,7 +46,26 @@ function formatContributionData(data: Record<string,number>) {
     for(let i = 0;i< firstDayOfWeek;i++){
         currentWeek.push({date: '',count: 0});
     }
-    
+
+    //process all dates including future dates
+    dates.forEach(([date,count]) => {
+        currentWeek.push({date , count});
+        if (currentWeek.length === 7) {
+            weeks.push(currentWeek);
+            currentWeek= [];
+        }
+    });
+
+    //fill the last week if needed 
+    if (currentWeek.length > 0) {
+        while(currentWeek.length < 7) {
+            currentWeek.push({date: '',count: 0});
+        }
+        weeks.push(currentWeek);
+    }
+
+    return weeks;
+
 }
 
 
