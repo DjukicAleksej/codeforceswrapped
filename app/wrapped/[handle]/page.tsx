@@ -413,6 +413,17 @@ export default function WrappedPage ({ params} : { params: {handle: string}}) {
                                         </div>
                                     </div>
 
+                                    <button
+                                    onClick={scrollLeft}
+                                    className="absolute left-0 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center
+                                    bg-black/20 backdrop-blur-sm rounded-full opacity-0 group-hover:opacity-100
+                                    transition-opacity duration-200 hover:bg-black/40 z-10"
+                                    aria-label="Scroll left"
+                                    >
+                                        <ChevronLeft className="w-4 h-4 text-white/80" /> 
+
+                                    </button>
+                                    
                                     
                                 </div>
                                 </>
