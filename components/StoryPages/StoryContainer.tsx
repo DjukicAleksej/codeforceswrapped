@@ -132,6 +132,24 @@ export default function StoryContainer({stats,onComplete,onSkip}: StoryContainer
             className="absolute top-4 right-4 z-10 text-white hover:opacity-80">
                 <X size={24} />
             </button>
+
+            {/* story content */}
+            <AnimatePresence mode="wait">
+                <motion.div
+                key={currentPage}
+                initial={{ opacity: 0,x: 50}}
+                animate={{opacity: 1, x: 0}}
+                exit={{opacity: 0,x: -50}}
+                transition={{duration: 0.3}}
+                className="h-full"
+                >
+                    {React.createElement(stories[currentPage].component, {
+                        stats,
+                        onNext: goToNextPage
+                    })}
+                    
+                </motion.div>
+            </AnimatePresence>
         </div>
-    )
+    );
 }
