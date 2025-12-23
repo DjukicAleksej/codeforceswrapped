@@ -96,6 +96,19 @@ function getRandomAvatar(handle: string){
 
 
 
+export default function WrappedPage ({ params} : { params: {handle: string}}) {
+    const [stats,setStats] = useState<UserStats | null>(null);
+    const [loading,setLoading] = useState(true);
+    const [error,setError] = useState<string | null>(null);
+    const [showStory , setShowStory] = useState(true);
+    const router = useRouter();
+    const wrapperRef = useRef<HTMLDivElement>(null);
+    const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+    
+}
+
+
 
 
 
