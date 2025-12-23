@@ -115,10 +115,22 @@ export default function StoryContainer({stats,onComplete,onSkip}: StoryContainer
             </div>
             {/* Navigation buttons*/}
             <button 
-            onClick={goToNextPage}
+            onClick={goToPrevPage}
             className={`absolute right-4 top-1/2 -translate-y-1/2 z-10 p-2 text-white hover:opacity-80 transition-opacity ${currentPage=== 0 ? 'opacity-0 pointer-events-none': 'opacity-50 hover:opacity-100'}`}
             >
                 <ChevronLeft size={32} />
+            </button>
+            <button 
+            onClick={goToNextPage}
+            className="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-2 text-white opacity-50 hover:opacity-100 transition-opacity">
+                <ChevronRight size={32} />
+            </button>
+
+            {/* Close button */}
+            <button 
+            onClick={onSkip}
+            className="absolute top-4 right-4 z-10 text-white hover:opacity-80">
+                <X size={24} />
             </button>
         </div>
     )
