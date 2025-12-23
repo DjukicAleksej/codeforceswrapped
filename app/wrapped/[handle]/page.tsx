@@ -131,6 +131,41 @@ export default function WrappedPage ({ params} : { params: {handle: string}}) {
         }
     }, [params.handle]);
 
+    const downloadImage = async => {
+        try {
+            const element = document.getElementById('wrap');
+            if(!element){
+                console.error('Element to capture not found');
+                return;
+            }
+            const canvas = await html2canvas(element, {
+                logging: true,
+                useCORS: true,
+                backgroundColor: '#000000',
+                scale: 2,
+                onclone: (clonedDoc) => {
+                    const clonedElement = clonedDoc.getElementById('wrap');
+                    if(clonedElement){
+                        clonedElement.style.backgroundColor='#000000';
+                    }
+                }
+            });
+
+            const dataUrl = canvas.toDataURL('image/png');
+
+            const link = document.createElement('a');
+            link.href = dataUrl;
+            link.download = 'wrapped_stats.png';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }catch(error){
+            console.error('Failed to capture or download the image:',error);
+        }
+    };
+
+    
+
 }
 
 
