@@ -542,10 +542,12 @@ export default function WrappedPage ({ params} : { params: {handle: string}}) {
                                         <Code2 className="text-pink-400 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12" />
                                         <span className="transition-colors duration-300 group-hover:text-pink-400">Top Language</span>
                                     </div>
-                                    
+                                    <div className="text-pink-400 text-2xl font-bold transition-all duration-300 hover:scale-105">
+                                        {stats?.topLanguage}
+                                    </div>
                                 </Card>
-
                     </div>
+                    
             </div>
         </motion.div>
     )
