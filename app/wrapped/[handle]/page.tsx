@@ -432,14 +432,32 @@ export default function WrappedPage ({ params} : { params: {handle: string}}) {
                                     >
                                         <ChevronRight className="w-4 h-4 text-white/80" />
 
-                                    </button>
+                                    </button>                 
+                                </div>
 
-                                    
+                                <div className="flex justify-between items-center text-sm text-gray-400 mt-2">
+                                    <span>Less</span>
+                                    <div className="flex gap-1">
+                                        {[0,1,2,3,4].map((level)=> (
+                                            <div
+                                            key={level}
+                                            className={`w-3 h-3 rounded-sm ${getContributionColor(level*2)}`}
+                                            />
+                                        ))}
+                                    </div>
+                                    <span>More</span>
                                 </div>
                                 </>
                             )}
                         </div>
                     </Card>
+
+                    {/*Stats grid */}
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {/* Current rating */}
+                        
+                    </div>
             </div>
         </motion.div>
     )
