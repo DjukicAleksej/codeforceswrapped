@@ -377,7 +377,48 @@ export default function WrappedPage ({ params} : { params: {handle: string}}) {
                     <div className="text-purple-400 text-2xl font-semibold">2025 Year in Code</div>
                 </div>
 
-                
+                    {/* Contribution Graph */}
+                    <Card className="bg-[#0d1117] p-6 rounded-xl hover:bg-[#161b22] transition-al duration-300">
+                        <div className="space-y-4">
+                            {stats && (
+                                <>
+                                <div className="text-sm text-gray-400">
+                                    {stats.totalSubmissions} submissions in {new Date().getFullYear()}
+                                </div>
+                                <div className="relative group">
+                                    <div
+                                    ref={scrollContainerRef}
+                                    className="relative w-full overflow-x-auto scrollbar-none"
+                                    style={{
+                                        msOverflowStyle: 'none',
+                                        scrollbarWidth: 'none',                                   }}
+                                    >
+                                        <div
+                                        className="flex gap-1 py-1"
+                                        style={{
+                                            width: 'max-content'
+                                        }}
+                                        >
+                                            {formatContributionData(stats.contributionData).map((week,weekIndex) => (
+                                                <div key={weekIndex} className="grid grid-rows-7 gap-1">
+                                                    {week.map((day,dayIndex) => (
+                                                        <div
+                                                        key={`${weekIndex}-${dayIndex}`}
+                                                        className={`w-3 h-3 rounded-sm ${getContributionColor(day.count)}`}
+                                                        title={day.date ? `${day.date}: ${day.count} contributions` : 'No contributions'}
+                                                        />
+                                                    ))}    
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    
+                                </div>
+                                </>
+                            )}
+                        </div>
+                    </Card>
             </div>
         </motion.div>
     )
