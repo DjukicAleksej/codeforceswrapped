@@ -598,7 +598,12 @@ export default function WrappedPage ({ params} : { params: {handle: string}}) {
             <div className="flex justify-center gap-4 mt-8">
                 <Button
                 onClick={downloadImage}
-                
+                className="flex items-center gap-2 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 
+                transform hover:scale-105 transition-all duration-200 px-6 py-3 rounded-lg shadow-lg hover:shadow-xl"
+                >
+                    <Download className="w-5 h-5 animate-bounce" />
+                    <span className="font-semibold">Download Wrap</span>
+                </Button>
             </div>
         </motion.div>
     )
