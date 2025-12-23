@@ -526,7 +526,17 @@ export default function WrappedPage ({ params} : { params: {handle: string}}) {
                                     {stats?.mostActiveMonth}
                                 </div>
                             </Card>
-                            
+                            {/* Most Active Day */}
+                                <Card className="bg-[#162321] p-6 rounded-xl transform transition-all duration-300 hover:scale-105 hover:shadow-xl hover:bg-[#1c2c28]">
+                                    <div className="flex items-center gap-2 text-gray-400 mb-2 group">
+                                        <CalendarDays className="text-cyan-400 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12" />
+                                        <span className="transition-colors duration-300 group-hover:text-cyan-400">Most Active Day</span>
+                                    </div>
+                                    <div className="text-cyan-400 text-2xl font-bold transition-all duration-300 hover:scale-105">
+                                     {stats?.mostActiveDay}
+                                    </div>
+                                </Card>
+
                     </div>
             </div>
         </motion.div>
