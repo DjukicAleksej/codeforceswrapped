@@ -164,7 +164,45 @@ export default function WrappedPage ({ params} : { params: {handle: string}}) {
         }
     };
 
-    
+    const shareImage = async () => {
+        try {
+            const element = document.getElementById('wrap');
+            if(!element){
+                console.error('Element to capture not found!');
+                return;
+            }
+
+            const canvas = await html2canvas(element, {
+                backgroundColor: '#000000',
+                useCORS: true,
+                scale: 2,
+                onclone: (clonedDoc) => {
+                    const clonedElement = clonedDoc.getElementById('wrap');
+                    if(clonedElement){
+                        clonedElement.style.backgroundColor = '#000000';
+                    }
+                }
+            });
+
+            canvas.toBlob(async (blob) => {
+                if(!blob) {
+                    console.error('Failed to create blob');
+                    return;
+                }
+
+                const filesArray = [
+                    new File(
+                        [blob],
+                        `${params.handle}-codeforces-wrapped-2025.png`,
+                        {type: 'image/png'}
+                    )
+                ];
+                
+            })
+        }
+    }
+
+
 
 }
 
