@@ -105,7 +105,32 @@ export default function WrappedPage ({ params} : { params: {handle: string}}) {
     const wrapperRef = useRef<HTMLDivElement>(null);
     const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-    
+    useEffect(() => {
+        const fetchStats = async () => {
+            try {
+                setLoading(true);
+                setError(null);
+                const res = await fetch(`/api/stats?handle=${params.handle}`);
+                const data = await res.json();
+
+                if(!res.ok){
+                    throw new Error(data.error || 'Failed to fetch');
+                }
+
+                console.log('Fetched stats:',data);
+                setStats(data);
+            } catch(error: any){
+                console.error('Failed to fetch stats:',error);
+                setError(error.message || 'Failed to load stats');
+            } finally {
+                setLoading(false);
+            }
+        };
+        if(params.handle){
+            fetchStats();
+        }
+    }, [params.handle]);
+
 }
 
 
