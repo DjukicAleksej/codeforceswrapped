@@ -325,6 +325,58 @@ export default function WrappedPage ({ params} : { params: {handle: string}}) {
         );
     }
 
+    return (
+        <motion.div
+        initial={{opacity: 0}}
+        animate={{opacity: 1}}
+        transition={{duration: 1}}
+        className="min-h-screen bg-black text-white p-8"
+        >
+            {/*wrap everything that should be caputerd in a div with id="wrap" */}
+            <div id="wrap" className="max-w-3xl mx-auto space-y-8 bg-black">
+                {/*Header*/}
+                <div className="text-center space-y-4 mb-8">
+                    <div className="w-28 h-28 mx-auto rounded-full overflow-hidden bg-gray-800 relative">
+                        {stats?.profilePicture ? (
+                            <Image
+                            src = {stats.profilePicture}
+                            alt={`${stats.handle}'s profile picture`}
+                            width={112}
+                            height={112}
+                            className="w-full h-full object-cover"
+                            onError={(e) => {
+                                try {
+                                    const target = e.target as HTMLImageElement;
+                                    const parent = target.parentElement;
+
+                                    if(parent) {
+                                        //hide failed image
+                                        target.style.display = 'none';
+
+                                        //update paren element
+                                        parent.style.backgroundColor = '#6366f1';
+                                        parent.innerHTML=`
+                                        <div class="w-full flex items-center justify-center text-2xl font-bold text-white>
+                                        ${stats.handle.substring(0,2).toUpperCase()}
+                                        </div>
+                                        `;
+                                    }
+                                } catch (error) {
+                                    console.error('Error handling image fallback:',error);
+                                }
+                            }}
+                            />
+                        ) : (
+                            //default fallback if no pfp
+                            <div className="w-full h-full flex items-center justify-center text-2xl font-bold text-white bg-[#6366f1]">
+                                {stats.handle.substring(0,2).toUpperCase()}
+                                </div>
+                        )}
+                    </div>
+                </div>
+            </div>
+        </motion.div>
+    )
 
 }
 
