@@ -303,10 +303,27 @@ export default function WrappedPage ({ params} : { params: {handle: string}}) {
 
             <div className ="min-h-screen flex flex-col items-center justify-center bg-black text-white gap-4">
                 <div className="text-xl text-red-400">{error}</div>
+                <button onClick={() => router.push('/')}
+                className="text-blue-400 hover:underline">
+                    Return to Home
+                </button>
             </div>
-        )
+        );
     }
 
+    if(!stats){
+        return null;
+    }
+
+    if(showStory) {
+        return (
+            <StoryContainer
+            stats={stats}
+            onComplete={() => setShowStory(false)}
+            onSkip={() => setShowStory(false)}
+            />
+        );
+    }
 
 
 }
