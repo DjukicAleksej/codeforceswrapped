@@ -456,7 +456,13 @@ export default function WrappedPage ({ params} : { params: {handle: string}}) {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {/* Current rating */}
-                        
+                        <Card className="bg-[#162321] p-6 rounded-xl transform transition-all duration-300 hover:scale-105 hover:shadow-xl hover:bg-[#1c2c28]">
+                            <div className="flex items-center gap-2 text-gray-400 mb-2 group">
+                                <Trophy className="text-yellow-400 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12"/>
+                                <span className="transition-colors duration-300 group-hover:text-yellow-400">Current Rating</span>
+                            </div>
+                            
+                        </Card>
                     </div>
             </div>
         </motion.div>
