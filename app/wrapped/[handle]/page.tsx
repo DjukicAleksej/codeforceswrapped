@@ -197,10 +197,45 @@ export default function WrappedPage ({ params} : { params: {handle: string}}) {
                         {type: 'image/png'}
                     )
                 ];
-                
-            })
+
+                try {
+                    if(navigator.share && navigator.canShare({files: filesArray})){
+                        await navigator.share({
+                            files: filesArray,
+                            title: 'Codeforces Wrapped 2025',
+                            text:  `Checkout my Codeforces Wrapped 2025! @${params.handle}`,
+
+                        });
+                    } else {
+                        //fallback for browser sthat dfont support native sharing
+                        const shareUrl = canvas.toDataURL('image/png');
+                        const shareText = encodeURIComponent(`Check out my Codeforces Wrapped 2025! @${params.handle}`);
+                        const shareLink = encodeURIComponent(window.location.href);
+
+                        window.open(
+                            `https://twitter.com/intent/tweet?text=${shareText}&url=${shareLink}`,
+                            '_blank'
+                        );
+
+                    }
+                } catch (error) {
+                    console.error('Error sharing:', error);
+                    //fallback to twitter sharing if native sharing fails
+                    const shareText = encodeURIComponent(`Check out my Codeforces Wrapped 2025! @${params.handle}`);
+                    const shareLink = encodeURIComponent(window.location.href);
+
+
+                    window.open(
+                        `https://twitter.com/intent/tweet?text=${shareText}&url=${shareLink}`,
+                        '_blank'
+                    );
+                }
+
+            },'image/png')
+        }catch (error){
+            console.error('Error generating image:', error);
         }
-    }
+    };
 
 
 
