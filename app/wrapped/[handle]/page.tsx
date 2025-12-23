@@ -536,6 +536,14 @@ export default function WrappedPage ({ params} : { params: {handle: string}}) {
                                      {stats?.mostActiveDay}
                                     </div>
                                 </Card>
+                            {/*Top Language */}
+                                <Card className="bg-[#2d1f2e] p-6 rounded-xl transform transition-all duration-300 hover:scale-105 hover:shadow-xl hover:bg-[#382639]">
+                                    <div className="flex items-center gap-2 text-gray-400 mb-2 group">
+                                        <Code2 className="text-pink-400 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12" />
+                                        <span className="transition-colors duration-300 group-hover:text-pink-400">Top Language</span>
+                                    </div>
+                                    
+                                </Card>
 
                     </div>
             </div>
