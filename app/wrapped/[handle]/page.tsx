@@ -15,3 +15,7 @@ import StoryContainer from '@/components/StoryPages/StoryContainer';
 import { Toaster} from '@/components/ui/sonner';
 
 
+export const dynamic = 'force-dynamic';
+
+
+
