@@ -373,7 +373,11 @@ export default function WrappedPage ({ params} : { params: {handle: string}}) {
                                 </div>
                         )}
                     </div>
+                    <h1 className="text-4xl font-bold">@{stats.handle}</h1>
+                    <div className="text-purple-400 text-2xl font-semibold">2025 Year in Code</div>
                 </div>
+
+                
             </div>
         </motion.div>
     )
