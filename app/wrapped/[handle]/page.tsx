@@ -238,6 +238,21 @@ export default function WrappedPage ({ params} : { params: {handle: string}}) {
     };
 
 
+    const handleDownloadSummary = () => {
+        if(stats) {
+            const summary = {
+                username: params.handle,
+                problemsSolved: stats.problemsSolved,
+                maxRating: stats.rating?.maxRating,
+                currentRating: stats.rating?.currentRating,
+                mostActiveDay: stats.mostActiveDay,
+                mostActiveMonth: stats.mostActiveMonth,
+                totalSolved: stats.problemsSolved,
+                topLanguage: stats.topLanguage,
+            };
+        }
+    }
+
 
 }
 
