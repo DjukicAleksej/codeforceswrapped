@@ -604,6 +604,14 @@ export default function WrappedPage ({ params} : { params: {handle: string}}) {
                     <Download className="w-5 h-5 animate-bounce" />
                     <span className="font-semibold">Download Wrap</span>
                 </Button>
+                <Button
+                onClick={shareImage}
+                className="flex items-center gap-2 bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 
+                transform hover:scale-105 transition-all duration-200 px-6 py-3 rounded-lg shadow-lg hover:shadow-xl"
+                >
+                    <Share2 className="w-5 h-5 group-hover:rotate-12 transition-transform duration-200"/>
+                    <span className="font-semibold">Share Wrap</span>
+                </Button>
             </div>
         </motion.div>
     )
