@@ -65,8 +65,19 @@ function formatContributionData(data: Record<string,number>) {
     }
 
     return weeks;
-
 }
+
+
+function getMonthLabels(weeks: Array<Array<{date: string;count: number} >> ) {
+    const labels: {text: string;index: number}[] = [];
+    let lastMonth = -1;
+
+    weeks.forEach((week,weekIndex)=>{
+        
+    })
+}
+
+
 
 
 
