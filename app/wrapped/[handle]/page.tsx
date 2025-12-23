@@ -250,8 +250,18 @@ export default function WrappedPage ({ params} : { params: {handle: string}}) {
                 totalSolved: stats.problemsSolved,
                 topLanguage: stats.topLanguage,
             };
+
+            const blob = new Blob([JSON.stringify(summary,null,2)],{type: 'application/json'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${params.handle}-github-summary.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
         }
-    }
+    };
 
 
 }
