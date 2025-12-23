@@ -547,7 +547,22 @@ export default function WrappedPage ({ params} : { params: {handle: string}}) {
                                     </div>
                                 </Card>
                     </div>
-                    
+                    {/* Power Level Card */}
+                    <Card className="bg-gray-900 p-6 rounded-xl">
+                        <div className="space-y-4 text-center">
+                            <div className="text-gray-400 text-sm">POWER LEVEL</div>
+                            <div className={`text-4xl font-bold ${stats?.PowerClass.color} transition-all duration-300 hover:scale-105`}>
+                                {stats?.PowerClass.title}
+                            </div>
+                            <div className="text-gray-400 text-sm">
+                                {stats?.PowerClass.description}
+                            </div>
+
+                            
+                        </div>
+                    </Card>
+
+
             </div>
         </motion.div>
     )
