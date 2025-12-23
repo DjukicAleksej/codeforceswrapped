@@ -29,6 +29,27 @@ function getContributionColor(count: number): string {
 const MONTHS = ['Jan', 'Feb' , 'Mar' , 'Apr' ,' May' , 'Jun' , 'Jul','Aug','Sep','Oct','Nov','Dec'];
 
 
+function formatContributionData(data: Record<string,number>) {
+    const weeks: Array<Array<{date: string;count:number} >> = [];
+    const dates = Object.entries(data)
+    .sort((a,b) => a[0].localeCompare(b[0]));
+
+    let currentWeek: Array<{date: string;count:number}> = [];
+
+
+
+    //calculate first day offet
+    const firstDate = new Date(dates[0][0]);
+    const firstDayOfWeek = firstDate.getDay();
+
+    //addd empty cells for the first week
+    for(let i = 0;i< firstDayOfWeek;i++){
+        currentWeek.push({date: '',count: 0});
+    }
+    
+}
+
+
 
 
 
