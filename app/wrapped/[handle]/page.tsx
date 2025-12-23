@@ -88,6 +88,15 @@ function getMonthLabels(weeks: Array<Array<{date: string;count: number} >> ) {
     return labels;
 }
 
+function getRandomAvatar(handle: string){
+    const hash = handle.split('').reduce((acc,char) => acc + char.charCodeAt(0),0);
+    const avatarNumber = (hash % 20) + 1;
+    return `/avatars/avatar${avatarNumber}.png`;
+}
+
+
+
+
 
 
 
