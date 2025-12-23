@@ -612,9 +612,17 @@ export default function WrappedPage ({ params} : { params: {handle: string}}) {
                     <Share2 className="w-5 h-5 group-hover:rotate-12 transition-transform duration-200"/>
                     <span className="font-semibold">Share Wrap</span>
                 </Button>
+                <Button
+                onClick ={() => router.push('/')}
+                className="flex items-center gap-2 bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600
+                transform hover:scale-105 transition-all duration-200 px-6 py-3 rounded-lg shadow-lg hover:shadow-xl"
+                >
+                    <Home className="w-5 h-5" />
+                    <span className="font-semibold">Back to Home</span>
+                </Button>
             </div>
         </motion.div>
-    )
+    );
 
 }
 
