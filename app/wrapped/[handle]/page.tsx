@@ -290,7 +290,24 @@ export default function WrappedPage ({ params} : { params: {handle: string}}) {
         }
     };
 
-    
+    if(loading){
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-black">
+                <div className="animate-pulse text-xl text-white">Loading your coding journey...</div>
+            </div>
+        );
+    }
+
+    if(error) {
+        return (
+
+            <div className ="min-h-screen flex flex-col items-center justify-center bg-black text-white gap-4">
+                <div className="text-xl text-red-400">{error}</div>
+            </div>
+        )
+    }
+
+
 
 }
 
