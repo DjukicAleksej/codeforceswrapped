@@ -73,8 +73,19 @@ function getMonthLabels(weeks: Array<Array<{date: string;count: number} >> ) {
     let lastMonth = -1;
 
     weeks.forEach((week,weekIndex)=>{
-        
-    })
+        week.forEach(day => {
+            if(day.date) {
+                const date = new Date(day.date);
+                const month = date.getMonth();
+                if(month !== lastMonth) {
+                    labels.push({ text: MONTHS[month],index: weekIndex});
+                    lastMonth = month;
+                }
+            }
+        });
+    });
+
+    return labels;
 }
 
 
