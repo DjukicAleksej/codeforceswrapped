@@ -268,8 +268,29 @@ export default function WrappedPage ({ params} : { params: {handle: string}}) {
         return `https://userpic.codeforces.org/user/avatar/${handle}`;
     };
 
-    
+    const profilePicture = stats?.profilePicture
+    ? stats.profilePicture.replace(/^http:/,'https:')
+    : null;
 
+    const scrollLeft = () =>{
+        if(scrollContainerRef.current){
+            scrollContainerRef.current.scrollBy({
+                left: -200,
+                behavior: 'smooth'
+            });
+        }
+    };
+    
+    const scrollRight = () => {
+        if(scrollContainerRef.current){
+            scrollContainerRef.current.scrollBy({
+                left: 200,
+                behavior: 'smooth'
+            });
+        }
+    };
+
+    
 
 }
 
