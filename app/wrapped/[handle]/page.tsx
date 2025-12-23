@@ -522,8 +522,11 @@ export default function WrappedPage ({ params} : { params: {handle: string}}) {
                                     <Calendar className="text-orange-400 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12" />
                                     <span className="transition-colors duration-300 group-hover:text-orange-400">Most Active Month</span>
                                 </div>
-                                
+                                <div className="text-orange-400 text-2xl font-bold transition-all duration-300 hover:scale-105">
+                                    {stats?.mostActiveMonth}
+                                </div>
                             </Card>
+                            
                     </div>
             </div>
         </motion.div>
