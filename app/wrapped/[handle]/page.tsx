@@ -264,6 +264,13 @@ export default function WrappedPage ({ params} : { params: {handle: string}}) {
     };
 
 
+    const getProfilePicture = (handle: string) => {
+        return `https://userpic.codeforces.org/user/avatar/${handle}`;
+    };
+
+    
+
+
 }
 
 
