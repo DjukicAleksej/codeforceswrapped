@@ -18,4 +18,18 @@ import { Toaster} from '@/components/ui/sonner';
 export const dynamic = 'force-dynamic';
 
 
+function getContributionColor(count: number): string {
+    if(count === 0) return 'bg-[#1b1f23]';
+    if(count ===1) return 'bg-[#0e4429]';
+    if(count <= 3) return 'bg-[#006d32]';
+    if(count <= 5) return 'bg-[#26a641]';
+    return 'bg-[#39d353]';
+}
+
+const MONTHS = ['Jan', 'Feb' , 'Mar' , 'Apr' ,' May' , 'Jun' , 'Jul','Aug','Sep','Oct','Nov','Dec'];
+
+
+
+
+
 
