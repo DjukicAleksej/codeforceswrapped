@@ -557,12 +557,48 @@ export default function WrappedPage ({ params} : { params: {handle: string}}) {
                             <div className="text-gray-400 text-sm">
                                 {stats?.PowerClass.description}
                             </div>
-
-                            
+                            {/* Power Level Progess */}
+                            <div className="mt-4  space-y-2">
+                                <div className="flex justify-between text-xs text-gray-400">
+                                    <span>Next Level:</span>
+                                    <span>
+                                        {stats && stats.totalSubmissions < 100 ? '100 submissions' :
+                                            stats?.totalSubmissions < 500 ? '500 submissions' :
+                                            stats?.totalSubmissions < 1000 ? '1000 submissions' :
+                                            stats?.totalSubmissions < 2000 ? '2000 submissions' :
+                                            stats?.totalSubmissions < 4000 ? '4000 submissions' :
+                                            stats?.totalSubmissions < 9000 ? '9000 submissions' :
+                                            'MAX LEVEL ACHIEVED! 🎉'}
+                                    </span>
+                                </div>
+                            </div>
                         </div>
                     </Card>
 
+                    {/* Credits section - keep inside wrap div */}
+                    <div className="relative mt-12 pb-8">
+                        <div className="text-center">
+                            <div className="flex justify-center items-center space-x-8 text-sm text-gray-500">
+                                <Link
+                                href="https://github.com/DjukicAleksej"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-gray-400 hover:text-purple-300 transition-colors"
+                                >
+                                    Created by Aleksej Djukic
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
 
+            </div>
+
+
+            {/* Buttons moved outside the wrap div */}
+            <div className="flex justify-center gap-4 mt-8">
+                <Button
+                onClick={downloadImage}
+                
             </div>
         </motion.div>
     )
