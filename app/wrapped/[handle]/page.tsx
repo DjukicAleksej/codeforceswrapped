@@ -461,7 +461,14 @@ export default function WrappedPage ({ params} : { params: {handle: string}}) {
                                 <Trophy className="text-yellow-400 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12"/>
                                 <span className="transition-colors duration-300 group-hover:text-yellow-400">Current Rating</span>
                             </div>
-                            
+                            <div className={`text-2xl font-bold ${stats?.rating?.currentColor || 'text-gray-500'} transition-all duration-300 hover:scale-105`}>
+                                 {stats?.rating?.current || 'Unrated'}
+                           </div>
+                            <div
+                            className={`text-sm ${stats?.rating?.currentColor || 'text-gray-500'} transition-all duration-300 hover:scale-105`}
+                            >
+                                {stats?.rating?.currentRank || 'Unrated'}
+                            </div>
                         </Card>
                     </div>
             </div>
