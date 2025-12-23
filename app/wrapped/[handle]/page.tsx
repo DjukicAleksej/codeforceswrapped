@@ -483,10 +483,19 @@ export default function WrappedPage ({ params} : { params: {handle: string}}) {
                                 {stats?.rating?.maxRank || 'Unrated'}
                             </div>
                         </Card>
-
-
-                        {/* Universal Rank */}
+                        {/* Universal Rank*/}
                         <Card className="bg-[#2d2215] p-6 rounded-xl transform transition-all duration-300 hover:scale-105 hover:shadow-xl hover:bg-[#382a1a]">
+                            <div className="flex items-center gap-2 text-gray-400 mb-2 group">
+                                <Crown className="text-yellow-500 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12" />
+                                <span className="transition-colors duration-300 group-hover:text-yellow-500">Universal rank</span>
+                            </div>
+                            <div className="text-yellow-500 text-2xl font-bold transition-all duration-300 hover:scale-105">
+                                Top {stats?.universalRank}%
+                            </div>
+                        </Card>
+
+                        {/* Longest streak */}
+                        <Card className="bg-[#231f2e] p-6 rounded-xl transform transition-all duration-300 hover:scale-105 hover:shadow-xl hover:bg-[#2d2839]">
                             <div className="flex items-center gap-2 text-gray-400 mb-2 group">
                                 <Zap className="text-purple-400 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12" />
                                 <span className="transition-colors duration-300 group-hover:text-purple-400">Longest Streak</span>
@@ -496,7 +505,9 @@ export default function WrappedPage ({ params} : { params: {handle: string}}) {
                             </div>
                         </Card>
 
-                        
+                        {/*Total Submissions */}
+
+
                     </div>
             </div>
         </motion.div>
