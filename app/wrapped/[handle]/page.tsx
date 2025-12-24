@@ -66,6 +66,7 @@ export default function WrappedPage() {
                 cacheBust: true,
                 pixelRatio: 2,
                 backgroundColor: '#000000',
+                skipFonts: true, // Skip font processing to avoid trim error
             });
 
             const link = document.createElement('a');
@@ -87,7 +88,8 @@ export default function WrappedPage() {
             const dataUrl = await toPng(element, {
                 cacheBust: true,
                 pixelRatio: 2,
-                backgroundColor: '#000000'
+                backgroundColor: '#000000',
+                skipFonts: true, // Skip font processing to avoid trim error
             });
 
             const blob = await (await fetch(dataUrl)).blob();
