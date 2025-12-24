@@ -1,14 +1,13 @@
-import './globals.css'
+import './globals.css';
 import type { Metadata } from "next";
-import {Inter} from 'next/font/google';
-import { ThemeProvider } from '@/components/ui/theme-provider';
-import { Toaster } from 'sonner';
+import { Inter, Outfit } from 'next/font/google';
+import { Toaster } from "@/components/ui/sonner";
 
-
-const inter = Inter ({subsets: ['latin']});
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
+const outfit = Outfit({ subsets: ['latin'], variable: '--font-outfit' });
 
 export const metadata: Metadata = {
-  title: 'Codeforces Wrapped',
+  title: 'Codeforces Wrapped 2025',
   description: 'Discover your competitive programming journey',
   icons: {
     icon: '/favicon.ico',
@@ -37,17 +36,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head />
-      <body className={inter.className}>
-        <ThemeProvider
-        attribute="class"
-        defaultTheme="system"
-        enableSystem
-        >
-          {children}
+    <html lang="en" className="dark" suppressHydrationWarning>
+      <body className={`${inter.variable} ${outfit.variable} font-sans bg-background text-foreground min-h-screen overflow-x-hidden selection:bg-purple-500/30 tracking-tight antialiased scroll-smooth`}>
+        {children}
         <Toaster />
-        </ThemeProvider>
       </body>
     </html>
   );

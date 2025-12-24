@@ -1,40 +1,41 @@
 'use client';
 
-import {motion} from "framer-motion";
-import {useState,useEffect} from "react";
-import { UserStats } from "@/lib/types";  
-import {Code2, Trophy, Medal} from "lucide-react";
+import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import { UserStats } from "@/lib/types";
+import { Code2, Trophy, Medal } from "lucide-react";
 
 interface CodingArsenalProps {
-    stats: UserStats;
-    onNext: () => void;
+  stats: UserStats;
+  onNext: () => void;
 }
 
 
-const CodingArsenal = ({stats,onNext}: CodingArsenalProps) => {
-    const [isVisible, setIsVisible] = useState(false);
+const CodingArsenal = ({ stats, onNext }: CodingArsenalProps) => {
+  const [isVisible, setIsVisible] = useState(false);
 
-    //sort languages by usage and get top 3
-    const topLanguages = Object.entries(stats.languageStats)
+  //sort languages by usage and get top 3
+  const topLanguages = Object.entries(stats.languageStats)
     .sort(([, a], [, b]) => b - a)
-    .slice(0,3)
+    .slice(0, 3)
 
 
-    //Medal styles for each position
-    const medals = [
-        {icon: Trophy,color:"text-yellow-400",label:"Gold",bgGradient:"from-yellow-500/20 to-amber-500/20",border: "border-yellow-500/30"},
-        {icon: Medal,color:"text-gray-300",label:"Silver",bgGradient:"from-gray-400/20 to-gray-500/20",border: "border-gray-400/30"},
-        {icon: Medal,color:"text-yellow-600",label:"Bronze",bgGradient:"from-amber-600/20 to-amber-700/20",border: "border-amber-600/30"}
-    ];
-useEffect(() => {
+  //Medal styles for each position
+  const medals = [
+    { icon: Trophy, color: "text-yellow-400", label: "Gold", bgGradient: "from-yellow-500/20 to-amber-500/20", border: "border-yellow-500/30" },
+    { icon: Medal, color: "text-gray-300", label: "Silver", bgGradient: "from-gray-400/20 to-gray-500/20", border: "border-gray-400/30" },
+    { icon: Medal, color: "text-yellow-600", label: "Bronze", bgGradient: "from-amber-600/20 to-amber-700/20", border: "border-amber-600/30" }
+  ];
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsVisible(true);
-}, []);
+  }, []);
 
 
 
 
 
- return (
+  return (
     <div className="h-screen w-full flex items-center justify-center bg-gradient-to-br from-gray-900 to-black">
       <div className="max-w-2xl w-full p-8 space-y-12">
         <motion.div
@@ -50,7 +51,7 @@ useEffect(() => {
         <div className="space-y-6">
           {topLanguages.map(([language, count], index) => {
             const MedalIcon = medals[index].icon;
-            
+
             return (
               <motion.div
                 key={language}
@@ -75,7 +76,7 @@ useEffect(() => {
                 </div>
               </motion.div>
             );
-          })} 
+          })}
         </div>
 
         <motion.div

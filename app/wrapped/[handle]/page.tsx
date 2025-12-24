@@ -1,637 +1,326 @@
 'use client';
 
-import {useEffect , useState , useRef } from 'react';
-import {Card} from '@/components/ui/card';
+import { useEffect, useState, useRef } from 'react';
+import { Card } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 import { UserStats } from '@/lib/types';
 import { Crown, Zap, Trophy, Calendar, CalendarDays, Code2, Share2, Download, Home, ChevronLeft, ChevronRight } from 'lucide-react';
-import {useRouter} from 'next/navigation';
-import Image from 'next/image';
-import html2canvas from 'html2canvas';
-import  {Button} from '@/components/ui/button';
-import Link from 'next/link';
-import React from 'react';
-import {motion } from "framer-motion";
 import StoryContainer from '@/components/StoryPages/StoryContainer';
-import { Toaster} from '@/components/ui/sonner';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
+import { toast, Toaster } from 'sonner';
+import html2canvas from 'html2canvas';
 
+import { useParams } from 'next/navigation';
 
-export const dynamic = 'force-dynamic';
+import Image from 'next/image';
 
-
-function getContributionColor(count: number): string {
-    if(count === 0) return 'bg-[#1b1f23]';
-    if(count ===1) return 'bg-[#0e4429]';
-    if(count <= 3) return 'bg-[#006d32]';
-    if(count <= 5) return 'bg-[#26a641]';
-    return 'bg-[#39d353]';
-}
-
-const MONTHS = ['Jan', 'Feb' , 'Mar' , 'Apr' ,' May' , 'Jun' , 'Jul','Aug','Sep','Oct','Nov','Dec'];
-
-
-function formatContributionData(data: Record<string,number>) {
-    const weeks: Array<Array<{date: string;count:number} >> = [];
-    const dates = Object.entries(data)
-    .sort((a,b) => a[0].localeCompare(b[0]));
-
-    let currentWeek: Array<{date: string;count:number}> = [];
-
-
-
-    //calculate first day offet
-    const firstDate = new Date(dates[0][0]);
-    const firstDayOfWeek = firstDate.getDay();
-
-    //addd empty cells for the first week
-    for(let i = 0;i< firstDayOfWeek;i++){
-        currentWeek.push({date: '',count: 0});
-    }
-
-    //process all dates including future dates
-    dates.forEach(([date,count]) => {
-        currentWeek.push({date , count});
-        if (currentWeek.length === 7) {
-            weeks.push(currentWeek);
-            currentWeek= [];
-        }
-    });
-
-    //fill the last week if needed 
-    if (currentWeek.length > 0) {
-        while(currentWeek.length < 7) {
-            currentWeek.push({date: '',count: 0});
-        }
-        weeks.push(currentWeek);
-    }
-
-    return weeks;
-}
-
-
-function getMonthLabels(weeks: Array<Array<{date: string;count: number} >> ) {
-    const labels: {text: string;index: number}[] = [];
-    let lastMonth = -1;
-
-    weeks.forEach((week,weekIndex)=>{
-        week.forEach(day => {
-            if(day.date) {
-                const date = new Date(day.date);
-                const month = date.getMonth();
-                if(month !== lastMonth) {
-                    labels.push({ text: MONTHS[month],index: weekIndex});
-                    lastMonth = month;
-                }
-            }
-        });
-    });
-
-    return labels;
-}
-
-function getRandomAvatar(handle: string){
-    const hash = handle.split('').reduce((acc,char) => acc + char.charCodeAt(0),0);
-    const avatarNumber = (hash % 20) + 1;
-    return `/avatars/avatar${avatarNumber}.png`;
-}
-
-
-
-export default function WrappedPage ({ params} : { params: {handle: string}}) {
-    const [stats,setStats] = useState<UserStats | null>(null);
-    const [loading,setLoading] = useState(true);
-    const [error,setError] = useState<string | null>(null);
-    const [showStory , setShowStory] = useState(true);
-    const router = useRouter();
+export default function WrappedPage() {
+    const params = useParams();
+    const handle = params.handle as string;
+    const [stats, setStats] = useState<UserStats | null>(null);
+    const [loading, setLoading] = useState(true);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const [error, setError] = useState<any>(null);
+    const [showStory, setShowStory] = useState(true);
     const wrapperRef = useRef<HTMLDivElement>(null);
-    const scrollContainerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const fetchStats = async () => {
             try {
                 setLoading(true);
                 setError(null);
-                const res = await fetch(`/api/stats?handle=${params.handle}`);
+                const res = await fetch(`/api/stats?handle=${handle}`);
                 const data = await res.json();
 
-                if(!res.ok){
-                    throw new Error(data.error || 'Failed to fetch');
+                if (!res.ok) {
+                    throw new Error(data.error || 'Failed to fetch user data');
                 }
 
-                console.log('Fetched stats:',data);
+                console.log('Fetched stats:', data);
                 setStats(data);
-            } catch(error: any){
-                console.error('Failed to fetch stats:',error);
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            } catch (error: any) {
+                console.error('Failed to fetch stats:', error);
                 setError(error.message || 'Failed to load stats');
+                toast.error("Could not load user stats");
             } finally {
                 setLoading(false);
             }
         };
-        if(params.handle){
+        if (handle) {
             fetchStats();
         }
-    }, [params.handle]);
+    }, [handle]);
 
-    const downloadImage = async => {
+    const downloadImage = async () => {
         try {
-            const element = document.getElementById('wrap');
-            if(!element){
-                console.error('Element to capture not found');
-                return;
-            }
+            const element = document.getElementById('wrapped-summary');
+            if (!element) return;
+
             const canvas = await html2canvas(element, {
-                logging: true,
                 useCORS: true,
-                backgroundColor: '#000000',
                 scale: 2,
-                onclone: (clonedDoc) => {
-                    const clonedElement = clonedDoc.getElementById('wrap');
-                    if(clonedElement){
-                        clonedElement.style.backgroundColor='#000000';
-                    }
-                }
+                backgroundColor: '#000000',
             });
 
-            const dataUrl = canvas.toDataURL('image/png');
-
             const link = document.createElement('a');
-            link.href = dataUrl;
-            link.download = 'wrapped_stats.png';
-            document.body.appendChild(link);
+            link.download = `${handle}-wrapped-2025.png`;
+            link.href = canvas.toDataURL('image/png');
             link.click();
-            document.body.removeChild(link);
-        }catch(error){
-            console.error('Failed to capture or download the image:',error);
+            toast.success("Image downloaded!");
+        } catch (err) {
+            console.log(err);
+            toast.error("Failed to download image");
         }
     };
 
     const shareImage = async () => {
         try {
-            const element = document.getElementById('wrap');
-            if(!element){
-                console.error('Element to capture not found!');
-                return;
-            }
-
+            const element = document.getElementById('wrapped-summary');
+            if (!element) return;
             const canvas = await html2canvas(element, {
-                backgroundColor: '#000000',
                 useCORS: true,
                 scale: 2,
-                onclone: (clonedDoc) => {
-                    const clonedElement = clonedDoc.getElementById('wrap');
-                    if(clonedElement){
-                        clonedElement.style.backgroundColor = '#000000';
-                    }
-                }
+                backgroundColor: "#000000"
             });
 
             canvas.toBlob(async (blob) => {
-                if(!blob) {
-                    console.error('Failed to create blob');
-                    return;
-                }
+                if (!blob) return;
 
                 const filesArray = [
                     new File(
                         [blob],
-                        `${params.handle}-codeforces-wrapped-2025.png`,
-                        {type: 'image/png'}
+                        `${handle}-codeforces-wrapped-2025.png`,
+                        { type: 'image/png' }
                     )
                 ];
-
-                try {
-                    if(navigator.share && navigator.canShare({files: filesArray})){
+                if (navigator.share) {
+                    if (navigator.canShare && navigator.canShare({ files: filesArray })) {
                         await navigator.share({
                             files: filesArray,
                             title: 'Codeforces Wrapped 2025',
-                            text:  `Checkout my Codeforces Wrapped 2025! @${params.handle}`,
+                            text: `Checkout my Codeforces Wrapped 2025! @${handle}`,
 
                         });
                     } else {
-                        //fallback for browser sthat dfont support native sharing
+                        //fallback
                         const shareUrl = canvas.toDataURL('image/png');
-                        const shareText = encodeURIComponent(`Check out my Codeforces Wrapped 2025! @${params.handle}`);
+                        const shareText = encodeURIComponent(`Check out my Codeforces Wrapped 2025! @${handle}`);
                         const shareLink = encodeURIComponent(window.location.href);
 
                         window.open(
                             `https://twitter.com/intent/tweet?text=${shareText}&url=${shareLink}`,
                             '_blank'
                         );
-
                     }
-                } catch (error) {
-                    console.error('Error sharing:', error);
-                    //fallback to twitter sharing if native sharing fails
-                    const shareText = encodeURIComponent(`Check out my Codeforces Wrapped 2025! @${params.handle}`);
-                    const shareLink = encodeURIComponent(window.location.href);
 
+                } else {
+                    //fallback
+                    const shareText = encodeURIComponent(`Check out my Codeforces Wrapped 2025! @${handle}`);
 
                     window.open(
-                        `https://twitter.com/intent/tweet?text=${shareText}&url=${shareLink}`,
+                        `https://twitter.com/intent/tweet?text=${shareText}`,
                         '_blank'
                     );
                 }
+            })
 
-            },'image/png')
-        }catch (error){
-            console.error('Error generating image:', error);
+        } catch (error) {
+            console.error('Error sharing:', error);
+            //fallback to twitter sharing if native sharing fails
+            const shareText = encodeURIComponent(`Check out my Codeforces Wrapped 2025! @${handle}`);
+            const shareLink = encodeURIComponent(window.location.href);
+
+
+            window.open(
+                `https://twitter.com/intent/tweet?text=${shareText}&url=${shareLink}`,
+                '_blank'
+            );
         }
     };
 
-
     const handleDownloadSummary = () => {
-        if(stats) {
+        if (stats) {
             const summary = {
-                username: params.handle,
+                username: handle,
                 problemsSolved: stats.problemsSolved,
                 maxRating: stats.rating?.maxRating,
                 currentRating: stats.rating?.currentRating,
-                mostActiveDay: stats.mostActiveDay,
-                mostActiveMonth: stats.mostActiveMonth,
-                totalSolved: stats.problemsSolved,
-                topLanguage: stats.topLanguage,
+                rank: stats.rating?.currentRank,
+                contributions: stats.contributionData,
+                year: 2025
             };
-
-            const blob = new Blob([JSON.stringify(summary,null,2)],{type: 'application/json'});
+            const blob = new Blob([JSON.stringify(summary, null, 2)], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `${params.handle}-github-summary.json`;
+            a.download = `${handle}-github-summary.json`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
-            URL.revokeObjectURL(url);
         }
-    };
+    }
 
 
-    const getProfilePicture = (handle: string) => {
-        return `https://userpic.codeforces.org/user/avatar/${handle}`;
-    };
-
-    const profilePicture = stats?.profilePicture
-    ? stats.profilePicture.replace(/^http:/,'https:')
-    : null;
-
-    const scrollLeft = () =>{
-        if(scrollContainerRef.current){
-            scrollContainerRef.current.scrollBy({
-                left: -200,
-                behavior: 'smooth'
-            });
-        }
-    };
-    
-    const scrollRight = () => {
-        if(scrollContainerRef.current){
-            scrollContainerRef.current.scrollBy({
-                left: 200,
-                behavior: 'smooth'
-            });
-        }
-    };
-
-    if(loading){
+    if (loading) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-black">
-                <div className="animate-pulse text-xl text-white">Loading your coding journey...</div>
+            <div className="min-h-screen bg-black flex items-center justify-center">
+                <div className="flex flex-col items-center gap-4">
+                    <div className="w-16 h-16 border-4 border-white/10 border-t-primary rounded-full animate-spin" />
+                    <p className="text-white animate-pulse">Generating your Wrapped...</p>
+                </div>
             </div>
         );
     }
 
-    if(error) {
+    if (error) {
         return (
-
-            <div className ="min-h-screen flex flex-col items-center justify-center bg-black text-white gap-4">
-                <div className="text-xl text-red-400">{error}</div>
-                <button onClick={() => router.push('/')}
-                className="text-blue-400 hover:underline">
-                    Return to Home
-                </button>
+            <div className="min-h-screen bg-black flex items-center justify-center p-4">
+                <div className="glass-card p-8 max-w-md w-full text-center space-y-4">
+                    <div className="w-12 h-12 bg-red-500/20 rounded-full flex items-center justify-center mx-auto">
+                        <Zap className="w-6 h-6 text-red-500" />
+                    </div>
+                    <h2 className="text-xl font-bold text-white">Something went wrong</h2>
+                    <p className="text-gray-400">{error}</p>
+                    <div className="pt-4">
+                        <Link href="/">
+                            <Button variant="outline" className="border-white/10 hover:bg-white/5 text-white">
+                                <Home className="mr-2 h-4 w-4" /> Go Home
+                            </Button>
+                        </Link>
+                    </div>
+                </div>
             </div>
-        );
-    }
-
-    if(!stats){
-        return null;
-    }
-
-    if(showStory) {
-        return (
-            <StoryContainer
-            stats={stats}
-            onComplete={() => setShowStory(false)}
-            onSkip={() => setShowStory(false)}
-            />
         );
     }
 
     return (
-        <motion.div
-        initial={{opacity: 0}}
-        animate={{opacity: 1}}
-        transition={{duration: 1}}
-        className="min-h-screen bg-black text-white p-8"
-        >
-            {/*wrap everything that should be caputerd in a div with id="wrap" */}
-            <div id="wrap" className="max-w-3xl mx-auto space-y-8 bg-black">
-                {/*Header*/}
-                <div className="text-center space-y-4 mb-8">
-                    <div className="w-28 h-28 mx-auto rounded-full overflow-hidden bg-gray-800 relative">
-                        {stats?.profilePicture ? (
-                            <Image
-                            src = {stats.profilePicture}
-                            alt={`${stats.handle}'s profile picture`}
-                            width={112}
-                            height={112}
-                            className="w-full h-full object-cover"
-                            onError={(e) => {
-                                try {
-                                    const target = e.target as HTMLImageElement;
-                                    const parent = target.parentElement;
+        <main className="min-h-screen bg-black text-white relative flex flex-col items-center justify-center p-4">
+            {/* Background Effects */}
+            <div className="absolute inset-0 mesh-bg opacity-20 pointer-events-none" />
 
-                                    if(parent) {
-                                        //hide failed image
-                                        target.style.display = 'none';
+            {showStory && stats ? (
+                <StoryContainer
+                    stats={stats}
+                    onComplete={() => setShowStory(false)}
+                    onSkip={() => setShowStory(false)}
+                />
+            ) : null}
 
-                                        //update paren element
-                                        parent.style.backgroundColor = '#6366f1';
-                                        parent.innerHTML=`
-                                        <div class="w-full flex items-center justify-center text-2xl font-bold text-white>
-                                        ${stats.handle.substring(0,2).toUpperCase()}
-                                        </div>
-                                        `;
-                                    }
-                                } catch (error) {
-                                    console.error('Error handling image fallback:',error);
-                                }
-                            }}
-                            />
-                        ) : (
-                            //default fallback if no pfp
-                            <div className="w-full h-full flex items-center justify-center text-2xl font-bold text-white bg-[#6366f1]">
-                                {stats.handle.substring(0,2).toUpperCase()}
-                                </div>
-                        )}
+            {!showStory && stats && (
+                <div className="flex flex-col items-center gap-8 w-full max-w-lg z-10 animate-fade-in-down py-8">
+                    <div className="flex gap-4 w-full justify-between">
+                        <Link href="/">
+                            <Button variant="ghost" className="text-gray-400 hover:text-white">
+                                <Home className="mr-2 h-4 w-4" /> Home
+                            </Button>
+                        </Link>
+                        <Button onClick={() => setShowStory(true)} variant="ghost" className="text-primary hover:text-primary/80">
+                            Replay Story <ChevronLeft className="ml-2 h-4 w-4 rotate-180" />
+                        </Button>
                     </div>
-                    <h1 className="text-4xl font-bold">@{stats.handle}</h1>
-                    <div className="text-purple-400 text-2xl font-semibold">2025 Year in Code</div>
-                </div>
 
-                    {/* Contribution Graph */}
-                    <Card className="bg-[#0d1117] p-6 rounded-xl hover:bg-[#161b22] transition-al duration-300">
-                        <div className="space-y-4">
-                            {stats && (
-                                <>
-                                <div className="text-sm text-gray-400">
-                                    {stats.totalSubmissions} submissions in {new Date().getFullYear()}
+                    {/* Summary Card To Capture */}
+                    <div
+                        id="wrapped-summary"
+                        ref={wrapperRef}
+                        className="w-full bg-gradient-to-br from-[#1a1d24] to-black rounded-3xl overflow-hidden shadow-2xl border border-white/10 relative"
+                    >
+                        {/* Card Background */}
+                        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10" />
+                        <div className="absolute -top-20 -right-20 w-64 h-64 bg-primary/20 rounded-full blur-3xl pointer-events-none" />
+                        <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-purple-500/20 rounded-full blur-3xl pointer-events-none" />
+
+                        <div className="p-8 space-y-8 relative z-10">
+                            {/* Header */}
+                            <div className="flex items-center justify-between">
+                                <div>
+                                    <h2 className="text-sm font-bold text-gray-400 uppercase tracking-widest">Codeforces Wrapped</h2>
+                                    <h1 className="text-3xl font-black text-white mt-1">2025</h1>
                                 </div>
-                                <div className="relative group">
-                                    <div
-                                    ref={scrollContainerRef}
-                                    className="relative w-full overflow-x-auto scrollbar-none"
-                                    style={{
-                                        msOverflowStyle: 'none',
-                                        scrollbarWidth: 'none',                                   }}
-                                    >
-                                        <div
-                                        className="flex gap-1 py-1"
-                                        style={{
-                                            width: 'max-content'
-                                        }}
-                                        >
-                                            {formatContributionData(stats.contributionData).map((week,weekIndex) => (
-                                                <div key={weekIndex} className="grid grid-rows-7 gap-1">
-                                                    {week.map((day,dayIndex) => (
-                                                        <div
-                                                        key={`${weekIndex}-${dayIndex}`}
-                                                        className={`w-3 h-3 rounded-sm ${getContributionColor(day.count)}`}
-                                                        title={day.date ? `${day.date}: ${day.count} contributions` : 'No contributions'}
-                                                        />
-                                                    ))}    
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-
-                                    <button
-                                    onClick={scrollLeft}
-                                    className="absolute left-0 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center
-                                    bg-black/20 backdrop-blur-sm rounded-full opacity-0 group-hover:opacity-100
-                                    transition-opacity duration-200 hover:bg-black/40 z-10"
-                                    aria-label="Scroll left"
-                                    >
-                                        <ChevronLeft className="w-4 h-4 text-white/80" /> 
-
-                                    </button>
-
-                                    <button
-                                    onClick={scrollRight}
-                                    className="absolute right-0 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center bg-black/20 backdrop-blur-sm rounded-full opacity-0 group-hover:opacity-100
-                                    transition-opacity duration-200 hover:bg-black/40 z-10"
-                                    aria-label="Scroll right"
-                                    >
-                                        <ChevronRight className="w-4 h-4 text-white/80" />
-
-                                    </button>                 
+                                <div className="p-2 bg-white/5 rounded-xl border border-white/5">
+                                    <Code2 className="w-8 h-8 text-white" />
                                 </div>
+                            </div>
 
-                                <div className="flex justify-between items-center text-sm text-gray-400 mt-2">
-                                    <span>Less</span>
-                                    <div className="flex gap-1">
-                                        {[0,1,2,3,4].map((level)=> (
-                                            <div
-                                            key={level}
-                                            className={`w-3 h-3 rounded-sm ${getContributionColor(level*2)}`}
+                            {/* Profile */}
+                            <div className="flex items-center gap-4 py-4 border-b border-white/10">
+                                <div className="relative w-24 h-24 rounded-full p-1 bg-gradient-to-br from-blue-500 to-purple-500">
+                                    <div className="relative w-full h-full rounded-full overflow-hidden bg-black">
+                                        {stats.profilePicture ? (
+                                            <Image
+                                                src={stats.profilePicture}
+                                                alt={stats.handle}
+                                                fill
+                                                className="object-cover"
                                             />
-                                        ))}
+                                        ) : (
+                                            <div className="w-full h-full flex items-center justify-center bg-gray-800">
+                                                <span className="text-2xl font-bold">{stats.handle.substring(0, 2).toUpperCase()}</span>
+                                            </div>
+                                        )}
                                     </div>
-                                    <span>More</span>
                                 </div>
-                                </>
-                            )}
-                        </div>
-                    </Card>
-
-                    {/*Stats grid */}
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {/* Current rating */}
-                        <Card className="bg-[#162321] p-6 rounded-xl transform transition-all duration-300 hover:scale-105 hover:shadow-xl hover:bg-[#1c2c28]">
-                            <div className="flex items-center gap-2 text-gray-400 mb-2 group">
-                                <Trophy className="text-yellow-400 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12"/>
-                                <span className="transition-colors duration-300 group-hover:text-yellow-400">Current Rating</span>
-                            </div>
-                            <div className={`text-2xl font-bold ${stats?.rating?.currentColor || 'text-gray-500'} transition-all duration-300 hover:scale-105`}>
-                                 {stats?.rating?.current || 'Unrated'}
-                           </div>
-                            <div
-                            className={`text-sm ${stats?.rating?.currentColor || 'text-gray-500'} transition-all duration-300 hover:scale-105`}
-                            >
-                                {stats?.rating?.currentRank || 'Unrated'}
-                            </div>
-                        </Card>
-                        {/* Max Rating */}
-                        <Card className="bg-[#2d2215] p-6 rounded-xl transform transition-all duration-300 hover:scale-105 hover:shadow-xl hover:bg-[#382a1a]">
-                            <div className="flex items-center gap-2 text-gray-400 mb-2 group">
-                                <Crown className="text-orange-400 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12" />
-                                <span className="transition-colors duration-300 group-hover:text-orange-400">Highest Rating</span>
-                            </div>
-                            <div className={`text-2xl font-bold ${stats?.rating?.maxColor || 'text-gray-500'} transition-all duration-300 hover:scale-105`}>
-                                {stats?.rating?.maxRating || 'Unrated'}
-                            </div>
-                            <div className={`text-sm ${stats?.rating?.maxColor || 'text-gray-500'} transition-all duration-300 hover:scale-105`}>
-                                {stats?.rating?.maxRank || 'Unrated'}
-                            </div>
-                        </Card>
-                        {/* Universal Rank*/}
-                        <Card className="bg-[#2d2215] p-6 rounded-xl transform transition-all duration-300 hover:scale-105 hover:shadow-xl hover:bg-[#382a1a]">
-                            <div className="flex items-center gap-2 text-gray-400 mb-2 group">
-                                <Crown className="text-yellow-500 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12" />
-                                <span className="transition-colors duration-300 group-hover:text-yellow-500">Universal rank</span>
-                            </div>
-                            <div className="text-yellow-500 text-2xl font-bold transition-all duration-300 hover:scale-105">
-                                Top {stats?.universalRank}%
-                            </div>
-                        </Card>
-
-                        {/* Longest streak */}
-                        <Card className="bg-[#231f2e] p-6 rounded-xl transform transition-all duration-300 hover:scale-105 hover:shadow-xl hover:bg-[#2d2839]">
-                            <div className="flex items-center gap-2 text-gray-400 mb-2 group">
-                                <Zap className="text-purple-400 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12" />
-                                <span className="transition-colors duration-300 group-hover:text-purple-400">Longest Streak</span>
-                            </div>
-                            <div className="text-purple-400 text-2xl font-bold transition-all duration-300 hover:scale-105">
-                                {stats?.longestStreak} days
-                            </div>
-                        </Card>
-
-                        {/*Total Submissions */}
-
-                        <Card className="bg-[#162321] p-6 rounded-xl transform transition-all duration-300 hover:scale-105 hover:shadow-xl hover:bg-[#1c2c28]">
-                            <div className="flex items-center gap-2 text-gray-400 mb-2 group">
-                                <Trophy className="text-emerald-400 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12" />
-                                <span className="transition-colors duration-300 group-hover:text-emeralt-400">Total submissions</span>
-                            </div>
-                            <div className="text-emerald-400 text-2xl font-bold transition-all duration-300 hover:scale-105">
-                                {stats?.totalSubmissions.toLocaleString()}
-                            </div>
-                        </Card>
-                            {/* most active month */}
-                            <Card className="bg-[#2d2215] p-6 rounded-xl transform transition-all duration-300 hover:scale-105 hover:shadow-xl hover:bg-[#382a1a]">
-                                <div className="flex items-center gap-2 text-gray-400 mb-2 group">
-                                    <Calendar className="text-orange-400 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12" />
-                                    <span className="transition-colors duration-300 group-hover:text-orange-400">Most Active Month</span>
-                                </div>
-                                <div className="text-orange-400 text-2xl font-bold transition-all duration-300 hover:scale-105">
-                                    {stats?.mostActiveMonth}
-                                </div>
-                            </Card>
-                            {/* Most Active Day */}
-                                <Card className="bg-[#162321] p-6 rounded-xl transform transition-all duration-300 hover:scale-105 hover:shadow-xl hover:bg-[#1c2c28]">
-                                    <div className="flex items-center gap-2 text-gray-400 mb-2 group">
-                                        <CalendarDays className="text-cyan-400 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12" />
-                                        <span className="transition-colors duration-300 group-hover:text-cyan-400">Most Active Day</span>
+                                <div>
+                                    <h3 className="text-2xl font-bold text-white">@{stats.handle}</h3>
+                                    <p className={`font-medium ${stats.rating.currentColor}`}>{stats.rating.currentRank}</p>
+                                    <div className="flex gap-2 mt-2">
+                                        <Badge className="bg-white/10 hover:bg-white/20 text-white border-none">
+                                            Peak: {stats.rating.maxRating}
+                                        </Badge>
                                     </div>
-                                    <div className="text-cyan-400 text-2xl font-bold transition-all duration-300 hover:scale-105">
-                                     {stats?.mostActiveDay}
-                                    </div>
-                                </Card>
-                            {/*Top Language */}
-                                <Card className="bg-[#2d1f2e] p-6 rounded-xl transform transition-all duration-300 hover:scale-105 hover:shadow-xl hover:bg-[#382639]">
-                                    <div className="flex items-center gap-2 text-gray-400 mb-2 group">
-                                        <Code2 className="text-pink-400 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12" />
-                                        <span className="transition-colors duration-300 group-hover:text-pink-400">Top Language</span>
-                                    </div>
-                                    <div className="text-pink-400 text-2xl font-bold transition-all duration-300 hover:scale-105">
-                                        {stats?.topLanguage}
-                                    </div>
-                                </Card>
-                    </div>
-                    {/* Power Level Card */}
-                    <Card className="bg-gray-900 p-6 rounded-xl">
-                        <div className="space-y-4 text-center">
-                            <div className="text-gray-400 text-sm">POWER LEVEL</div>
-                            <div className={`text-4xl font-bold ${stats?.PowerClass.color} transition-all duration-300 hover:scale-105`}>
-                                {stats?.PowerClass.title}
-                            </div>
-                            <div className="text-gray-400 text-sm">
-                                {stats?.PowerClass.description}
-                            </div>
-                            {/* Power Level Progess */}
-                            <div className="mt-4  space-y-2">
-                                <div className="flex justify-between text-xs text-gray-400">
-                                    <span>Next Level:</span>
-                                    <span>
-                                        {stats && stats.totalSubmissions < 100 ? '100 submissions' :
-                                            stats?.totalSubmissions < 500 ? '500 submissions' :
-                                            stats?.totalSubmissions < 1000 ? '1000 submissions' :
-                                            stats?.totalSubmissions < 2000 ? '2000 submissions' :
-                                            stats?.totalSubmissions < 4000 ? '4000 submissions' :
-                                            stats?.totalSubmissions < 9000 ? '9000 submissions' :
-                                            'MAX LEVEL ACHIEVED! 🎉'}
-                                    </span>
                                 </div>
                             </div>
-                        </div>
-                    </Card>
 
-                    {/* Credits section - keep inside wrap div */}
-                    <div className="relative mt-12 pb-8">
-                        <div className="text-center">
-                            <div className="flex justify-center items-center space-x-8 text-sm text-gray-500">
-                                <Link
-                                href="https://github.com/DjukicAleksej"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-gray-400 hover:text-purple-300 transition-colors"
-                                >
-                                    Created by Aleksej Djukic
-                                </Link>
+                            {/* Stats Grid */}
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="p-4 bg-white/5 rounded-2xl border border-white/5">
+                                    <p className="text-gray-400 text-xs mb-1">Problems Solved</p>
+                                    <p className="text-2xl font-bold text-white">{stats.problemsSolved}</p>
+                                </div>
+                                <div className="p-4 bg-white/5 rounded-2xl border border-white/5">
+                                    <p className="text-gray-400 text-xs mb-1">Total Submissions</p>
+                                    <p className="text-2xl font-bold text-white">{stats.totalSubmissions}</p>
+                                </div>
+                                <div className="p-4 bg-white/5 rounded-2xl border border-white/5">
+                                    <p className="text-gray-400 text-xs mb-1">Active Streak</p>
+                                    <p className="text-2xl font-bold text-white">{stats.longestStreak} Days</p>
+                                </div>
+                                <div className="p-4 bg-white/5 rounded-2xl border border-white/5">
+                                    <p className="text-gray-400 text-xs mb-1">Top Language</p>
+                                    <p className="text-2xl font-bold text-white truncate">{stats.topLanguage}</p>
+                                </div>
+                            </div>
+
+                            {/* Power Class */}
+                            <div className="p-6 bg-gradient-to-r from-yellow-500/10 to-orange-500/10 rounded-2xl border border-yellow-500/20 text-center relative overflow-hidden">
+                                <div className="relative z-10">
+                                    <p className="text-yellow-500 text-xs font-bold uppercase tracking-widest mb-1">Power Level</p>
+                                    <h3 className={`text-3xl font-black ${stats.PowerClass.color}`}>{stats.PowerClass.title}</h3>
+                                </div>
+                            </div>
+
+                            <div className="text-center">
+                                <p className="text-gray-500 text-xs">codeforces-wrapped.vercel.app</p>
                             </div>
                         </div>
                     </div>
 
-            </div>
-
-
-            {/* Buttons moved outside the wrap div */}
-            <div className="flex justify-center gap-4 mt-8">
-                <Button
-                onClick={downloadImage}
-                className="flex items-center gap-2 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 
-                transform hover:scale-105 transition-all duration-200 px-6 py-3 rounded-lg shadow-lg hover:shadow-xl"
-                >
-                    <Download className="w-5 h-5 animate-bounce" />
-                    <span className="font-semibold">Download Wrap</span>
-                </Button>
-                <Button
-                onClick={shareImage}
-                className="flex items-center gap-2 bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 
-                transform hover:scale-105 transition-all duration-200 px-6 py-3 rounded-lg shadow-lg hover:shadow-xl"
-                >
-                    <Share2 className="w-5 h-5 group-hover:rotate-12 transition-transform duration-200"/>
-                    <span className="font-semibold">Share Wrap</span>
-                </Button>
-                <Button
-                onClick ={() => router.push('/')}
-                className="flex items-center gap-2 bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600
-                transform hover:scale-105 transition-all duration-200 px-6 py-3 rounded-lg shadow-lg hover:shadow-xl"
-                >
-                    <Home className="w-5 h-5" />
-                    <span className="font-semibold">Back to Home</span>
-                </Button>
-            </div>
-        </motion.div>
+                    {/* Action Buttons */}
+                    <div className="flex flex-col sm:flex-row gap-3 w-full">
+                        <Button onClick={shareImage} className="flex-1 bg-white text-black hover:bg-gray-200">
+                            <Share2 className="mr-2 h-4 w-4" /> Share
+                        </Button>
+                        <Button onClick={downloadImage} variant="outline" className="flex-1 border-white/10 text-white hover:bg-white/5">
+                            <Download className="mr-2 h-4 w-4" /> Download Image
+                        </Button>
+                        <Button onClick={handleDownloadSummary} variant="outline" className="flex-1 border-white/10 text-white hover:bg-white/5">
+                            <Code2 className="mr-2 h-4 w-4" /> JSON
+                        </Button>
+                    </div>
+                </div>
+            )}
+        </main>
     );
-
 }
-
-
-
-
-
-
-
-
-
-

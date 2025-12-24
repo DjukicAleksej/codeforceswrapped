@@ -2,139 +2,156 @@
 import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import {Card, CardHeader , CardTitle , CardDescription,CardContent} from '@/components/ui/card';
-import {Badge} from '@/components/ui/badge';
-import {Avatar} from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
 import Image from 'next/image';
-import { useRouter} from 'next/navigation';
-import { Trophy,ChevronRight} from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { ArrowRight, Sparkles, Terminal, Code2, TrendingUp } from 'lucide-react';
 import Link from 'next/link';
-import {toast,Toaster} from 'sonner';
+import { toast } from 'sonner';
 
-export default function Home(){
-    const [handle,setHandle] = useState('');
-    const [loading,setLoading] = useState(false);
+export default function Home() {
+    const [handle, setHandle] = useState('');
+    const [loading, setLoading] = useState(false);
     const router = useRouter();
-    const [showCopied,setShowCopied] = useState(false);
 
     const generateWrapped = async (e: React.FormEvent) => {
         e.preventDefault();
-        if(!handle){
+        if (!handle) {
             toast.error("Please enter a Codeforces handle");
-        return;        
-    }
-    setLoading(true);
-    try{
-        const res = await fetch(`/api/stats?handle=${handle}`);
-        const data = await res.json();
-
-        if(!res.ok) throw new Error(data.error || 'Failed to fetch user data');
-
-        router.push(`/wrapped/${handle}`);
-    } catch(error:any) {
-        toast.error(error.message || 'Something went wrong');
-
-    } finally {
-        setLoading(false);
-    }
-    };
-    const featuredUsers = [
-        {handle: "tourist" , description:"Legendary Competitive Programmer",    image:"/assets/tourist.jpg"},
-        {handle: "jiangly", description: "Competitive Programming Expert", image: "/assets/jiangly.jpg"},
-        { handle: "Benq", description: "USACO Guide Contributor", image: "/assets/benq.jpg" },
-        { handle: "Um_nik", description: "Expert Problem Solver", image: "/assets/umnik.jpg" },
-        { handle: "Radewoosh", description: "Top Competitive Programmer", image: "/assets/radewoosh.jpg" }
-
-    ];
-    const copyToClipboard = async () => {
+            return;
+        }
+        setLoading(true);
         try {
-            await navigator.clipboard.writeText('40488690');
-            setShowCopied(true);
-            setTimeout(() => setShowCopied(false), 2000);
-        } catch {
-            toast.error(`Failed to copy`);
+            const res = await fetch(`/api/stats?handle=${handle}`);
+            const data = await res.json();
+
+            if (!res.ok) throw new Error(data.error || 'Failed to fetch user data');
+
+            router.push(`/wrapped/${handle}`);
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (error: any) {
+            toast.error(error.message || 'Something went wrong');
+            setLoading(false);
         }
     };
 
-    return (
-        <main className ="min-h-screen bg-gradient-to-b from-background to-secondary/20">
-            <div className="container mx-auto px-4 py-16 flex flex-col items-center">
-                <div className="text-center mb-12">
-                    <h1 className="text-4xl font-bold mb-4">Codeforces Wrapped</h1>
-                    <p className="text-xl text-muted-foreground mb-8">
-                        Discover your competitive programming journey in 2025
-                    </p>
-                    <div className="max-w-md mx-auto">
-                        <form onSubmit={generateWrapped} className="flex gap-2 mb-4">
-                            <Input 
-                            placeholder="Enter your Codeforces handle"
-                            value = {handle}
-                            onChange={(e) => setHandle(e.target.value)}
-                            className="text-lg"
-                            />
-                            <Button 
-                            type="submit"
-                            disabled={loading}
-                            size="lg"
-                            className="bg-primary hover:bg-primary/90"
-                            >
-                                {loading ? 'Loading...' : 'Generate My Wrapped'}
-                                </Button>
+    const featuredUsers = [
+        { handle: "tourist", description: "Legendary Grandmaster", image: "/assets/tourist.jpg", rating: 3979 },
+        { handle: "jiangly", description: "Legendary Grandmaster", image: "/assets/jiangly.jpg", rating: 3859 },
+        { handle: "Benq", description: "Legendary Grandmaster", image: "/assets/benq.jpg", rating: 3691 },
+        { handle: "Um_nik", description: "Legendary Grandmaster", image: "/assets/umnik.jpg", rating: 3450 },
+        { handle: "Radewoosh", description: "Legendary Grandmaster", image: "/assets/radewoosh.jpg", rating: 3720 }
+    ];
 
-                        </form>
-                        <p className ="text-sm text-muted-foreground">
-                            Best viewed on desktop
+    return (
+        <main className="min-h-screen bg-black text-white relative overflow-hidden">
+            {/* Background Effects */}
+            <div className="absolute inset-0 mesh-bg opacity-30 pointer-events-none" />
+            <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))] pointer-events-none opacity-20" />
+
+            <div className="container mx-auto px-4 py-8 relative z-10">
+                {/* Hero Section */}
+                <div className="flex flex-col items-center justify-center min-h-[80vh] text-center space-y-12">
+                    <div className="animate-fade-in-down space-y-6 max-w-4xl mx-auto">
+                        <Badge variant="secondary" className="bg-white/10 text-primary-foreground border-white/10 hover:bg-white/20 transition-all px-4 py-1.5 rounded-full text-sm font-medium backdrop-blur-md mb-4 inline-flex items-center gap-2">
+                            <Sparkles className="w-4 h-4 text-yellow-400" />
+                            <span>Codeforces Wrapped 2025 is here!</span>
+                        </Badge>
+
+                        <h1 className="text-6xl md:text-8xl font-black font-heading tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-white via-white to-gray-500 pb-2">
+                            UNWRAP YOUR <br />
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-glow">
+                                CP LEGACY
+                            </span>
+                        </h1>
+
+                        <p className="text-xl md:text-2xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
+                            Visualize your competitive programming journey. Analyze your stats, streaks, and styling in a stunning story format.
                         </p>
                     </div>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl w-full">
-                    <h2 className="text-2xl font-semibold col-span-full mb-4">Featured Profiles</h2>
-                    {featuredUsers.map((user) =>  (
-                        <Link 
-                        key={user.handle}
-                        href={`/wrapped/${user.handle}`}
-                        className="group relative overflow-hidden p-4 bg-[#1a1d24] rounded-xl transition-all duration-500 hover:bg-[#22262e] hover:scale-[1.02] hover:-translate-y-1 hover:shadow-xl"
-                        >
-                            <div className="flex items-center gap-3">
-                                <div className="relative h-12 w-12 rounded-full overflow-hidden">
-                                    <Image
-                                    src={user.image}
-                                    alt={`${user.handle}'s avatar`}
-                                    fill
-                                    className="object-cover transform transition-transform duration-500 group-hover:scale-110"
-                                    />
-                                </div>
-                                <div className="transform transition-all duration-500 group-hover:translate-x-1">
-                                      <h3 className="text-white font-medium">{user.handle}</h3>
-                                      <p className="text-gray-400 text-sm">{user.description}</p>
-                                </div>
+
+                    <div className="w-full max-w-md mx-auto relative group">
+                        <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
+                        <form onSubmit={generateWrapped} className="relative flex gap-2 p-2 bg-black/80 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl">
+                            <div className="relative flex-1">
+                                <Code2 className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                                <Input
+                                    placeholder="Enter your Codeforces handle..."
+                                    value={handle}
+                                    onChange={(e) => setHandle(e.target.value)}
+                                    className="pl-10 h-12 bg-transparent border-none text-lg text-white placeholder:text-gray-500 focus-visible:ring-0 focus-visible:ring-offset-0"
+                                />
                             </div>
-                              <ChevronRight className="absolute right-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-600 transform transition-all duration-500 group-hover:translate-x-1 group-hover:text-white" />
-                        </Link>
-                    ))}
-                </div>
-                <footer className="mt-8 text-center space-y-4">
-                    <div className="flex justify-center space-x-6 text-sm">
-                        <Link 
-                        href="https://github.com/DjukicAleksej"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-gray-400 hover:text-white transition-colors"
-                        >
-                            Created by Aleksej Djukic 🇧🇦
-                        </Link>
-                        <Link
-                        href="https://github.com/DjukicAleksej/codeforceswrapped/issues"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-gray-400 hover:text-white transition-colors"
-                        >
-                            Request a feature ⚡️ or report a bug 🐛
-                        </Link>
+                            <Button
+                                type="submit"
+                                disabled={loading}
+                                size="lg"
+                                className="h-12 px-8 bg-white text-black hover:bg-gray-200 font-bold tracking-wide transition-all duration-300"
+                            >
+                                {loading ? 'Loading...' : 'Generate'}
+                            </Button>
+                        </form>
                     </div>
+                </div>
+
+                {/* Featured Section */}
+                <div className="py-24 space-y-12">
+                    <div className="text-center space-y-4">
+                        <h2 className="text-3xl font-bold font-heading">Hall of Fame</h2>
+                        <p className="text-gray-400">See how the legends performed this year</p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+                        {featuredUsers.map((user, i) => (
+                            <Link
+                                key={user.handle}
+                                href={`/wrapped/${user.handle}`}
+                                className="group relative glass-card p-6 flex flex-col items-center text-center space-y-4 hover:-translate-y-2 hover:border-primary/50"
+                            >
+                                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-xl" />
+
+                                <div className="relative w-24 h-24 rounded-full p-1 bg-gradient-to-br from-gray-800 to-black group-hover:from-blue-500 group-hover:to-purple-500 transition-all duration-500">
+                                    <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-black">
+                                        <Image
+                                            src={user.image}
+                                            alt={user.handle}
+                                            fill
+                                            className="object-cover"
+                                        />
+                                    </div>
+                                    <div className="absolute -bottom-2 -right-2 bg-black border border-white/10 rounded-full p-1.5">
+                                        <TrendingUp className="w-4 h-4 text-green-400" />
+                                    </div>
+                                </div>
+
+                                <div className="relative z-10">
+                                    <h3 className="text-lg font-bold text-white group-hover:text-primary transition-colors">{user.handle}</h3>
+                                    <div className="flex items-center justify-center gap-2 mt-1">
+                                        <span className={`w-2 h-2 rounded-full ${user.rating >= 3000 ? 'bg-red-500 shadow-[0_0_10px_red]' : 'bg-orange-500'}`} />
+                                        <p className="text-xs text-gray-400 font-medium">{user.description}</p>
+                                    </div>
+                                </div>
+
+                                <div className="w-full pt-4 border-t border-white/5 relative z-10">
+                                    <div className="flex justify-between items-center text-sm">
+                                        <span className="text-gray-500">Rating</span>
+                                        <span className="font-mono text-white font-bold">{user.rating}</span>
+                                    </div>
+                                </div>
+                            </Link>
+                        ))}
+                    </div>
+                </div>
+
+                <footer className="py-12 text-center text-sm text-gray-500 border-t border-white/5">
+                    <p className="flex items-center justify-center gap-2">
+                        Built with <span className="text-red-500">♥</span> by
+                        <Link href="https://github.com/DjukicAleksej" className="text-white hover:underline underline-offset-4">
+                            Aleksej Djukic
+                        </Link>
+                    </p>
                 </footer>
             </div>
-            <Toaster />
         </main>
     );
 }
