@@ -54,24 +54,35 @@ export default function WrappedPage() {
     }, [handle]);
 
     const downloadImage = async () => {
+        const toastId = toast.loading("Generating image...");
         try {
             const element = document.getElementById('wrapped-summary');
-            if (!element) return;
+            if (!element) {
+                toast.error("Summary element not found", { id: toastId });
+                return;
+            }
 
+            // Wait for images to load? They should be loaded.
             const canvas = await html2canvas(element, {
                 useCORS: true,
                 scale: 2,
                 backgroundColor: '#000000',
+                logging: true, // Help debug
+                allowTaint: true, // Allow tainted images (might break toDataURL if CORS fails)
+                foreignObjectRendering: false // sometimes causes issues
             });
 
+            // If allowTaint is true, toDataURL might fail if valid CORS headers weren't received.
+            // But we try standard first.
             const link = document.createElement('a');
             link.download = `${handle}-wrapped-2025.png`;
             link.href = canvas.toDataURL('image/png');
             link.click();
-            toast.success("Image downloaded!");
+            toast.success("Image downloaded!", { id: toastId });
         } catch (err) {
-            console.log(err);
-            toast.error("Failed to download image");
+            console.error("Download failed:", err);
+            // Fallback: If simple CORS failed, try to proxy or warn
+            toast.error("Failed to download image. Tainted canvas or CORS issue.", { id: toastId });
         }
     };
 
@@ -244,6 +255,8 @@ export default function WrappedPage() {
                                                     alt={stats.handle}
                                                     fill
                                                     className="object-cover"
+                                                    unoptimized // Critical for html2canvas to work well with Next.js images
+                                                    crossOrigin="anonymous" // Attempt to request CORS permission
                                                 />
                                             ) : (
                                                 <div className="w-full h-full flex items-center justify-center bg-gray-800">

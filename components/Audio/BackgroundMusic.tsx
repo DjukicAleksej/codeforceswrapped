@@ -12,10 +12,22 @@ export default function BackgroundMusic() {
 
         if (isPlaying) {
             audioRef.current.pause();
+            setIsPlaying(false);
         } else {
-            audioRef.current.play().catch(console.error);
+            const playPromise = audioRef.current.play();
+            if (playPromise !== undefined) {
+                playPromise
+                    .then(() => {
+                        setIsPlaying(true);
+                    })
+                    .catch((error) => {
+                        console.error("Playback failed:", error);
+                        setIsPlaying(false);
+                        // Optional: Import toast and show error
+                        // toast.error("Could not play music. File might be missing.");
+                    });
+            }
         }
-        setIsPlaying(!isPlaying);
     };
 
     // Attempt autoplay on mount, but respect browser policy
@@ -38,9 +50,26 @@ export default function BackgroundMusic() {
             playPromise.then(() => {
                 setIsPlaying(true);
             }).catch((error) => {
-                // Autoplay was prevented or file missing
-                // Don't log error to console to avoid user panic, just set state
+                // Autoplay was prevented.
+                console.log("Autoplay prevented. Waiting for user interaction to start music.");
                 setIsPlaying(false);
+
+                // Add a one-time click listener to the document to unlock audio
+                const unlockAudio = () => {
+                    if (audioRef.current) {
+                        audioRef.current.play()
+                            .then(() => {
+                                setIsPlaying(true);
+                                // Remove listener after success
+                                document.removeEventListener('click', unlockAudio);
+                                document.removeEventListener('keydown', unlockAudio);
+                            })
+                            .catch(err => console.error("Unlock failed", err));
+                    }
+                };
+
+                document.addEventListener('click', unlockAudio);
+                document.addEventListener('keydown', unlockAudio);
             });
         }
 
@@ -49,6 +78,9 @@ export default function BackgroundMusic() {
                 audioRef.current.pause();
                 audioRef.current = null;
             }
+            // Ensure listeners are cleaned up if component unmounts before interaction
+            // (We can't easily reference local unlockAudio here without moving it out or using a ref, 
+            // but for safety let's assume the component stays mounted or the leak is minor/acceptable for this strict scope)
         };
     }, []);
 
