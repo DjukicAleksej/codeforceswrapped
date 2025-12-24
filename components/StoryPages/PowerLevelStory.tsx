@@ -19,46 +19,46 @@ export default function PowerLevelStory({ stats, onNext }: PowerLevelStoryProps)
     }, []);
 
     return (
-        <div className="h-full w-full flex items-center justify-center p-6 bg-gradient-to-br from-[#1c1917] via-black to-[#3f3f46]">
-            <div className="max-w-3xl w-full space-y-16 relative z-10 text-center">
-                <motion.div
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : -20 }}
-                    transition={{ duration: 0.8 }}
-                    className="space-y-4"
-                >
-                    <h1 className="text-5xl md:text-6xl font-black font-heading tracking-tight text-white mb-2">
-                        Your Power Level
+        <div className="fixed inset-0 w-screen h-screen flex items-center justify-center p-6 bg-[#020617] overflow-hidden">
+            {/* Background Effects */}
+            <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/20 via-transparent to-cyan-400/20 pointer-events-none" />
+
+            <motion.div
+                initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                animate={{ opacity: isVisible ? 1 : 0, scale: isVisible ? 1 : 0.95, y: isVisible ? 0 : 20 }}
+                transition={{ duration: 0.8, ease: "circOut" }}
+                className="glass-card max-w-7xl w-full p-10 md:p-20 flex flex-col items-center justify-center text-center space-y-16 relative z-10"
+            >
+                <div className="space-y-6">
+                    <h1 className="text-6xl md:text-8xl font-black font-heading tracking-tighter text-white drop-shadow-2xl">
+                        Power Level
                     </h1>
-                    <p className="text-xl text-gray-400 font-medium tracking-wide">Based on your incredible achievements</p>
-                </motion.div>
+                    <p className="text-2xl md:text-3xl text-slate-400 font-light tracking-wide">
+                        The verdict is in
+                    </p>
+                </div>
 
                 <motion.div
                     initial={{ scale: 0.5, opacity: 0 }}
                     animate={{ scale: isVisible ? 1 : 0.5, opacity: isVisible ? 1 : 0 }}
                     transition={{ delay: 0.3, duration: 0.8, type: "spring", bounce: 0.4 }}
-                    className="relative mx-auto w-fit"
+                    className="relative"
                 >
-                    <div className="w-56 h-56 rounded-full border-[6px] border-gradient-to-tr from-yellow-500 to-orange-600 p-2 flex items-center justify-center relative bg-gradient-to-b from-[#2a2a2a] to-black shadow-2xl">
-                        <div className="absolute inset-0 rounded-full border-4 border-yellow-500/50 blur-md pointer-events-none"></div>
-                        <Zap className="w-24 h-24 text-white fill-white" />
+                    <div className="w-64 h-64 md:w-80 md:h-80 rounded-full border-[8px] border-white/5 bg-gradient-to-br from-[#1e1b4b] to-black flex items-center justify-center relative shadow-[0_0_100px_rgba(250,204,21,0.2)]">
+                        <div className="absolute inset-0 rounded-full border-4 border-yellow-500/20 animate-pulse-glow" />
+                        <Zap className="w-32 h-32 md:w-40 md:h-40 text-yellow-400 fill-yellow-400 drop-shadow-[0_0_30px_rgba(250,204,21,0.6)]" />
                     </div>
                 </motion.div>
 
-                <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 30 }}
-                    transition={{ delay: 0.6, duration: 0.8 }}
-                    className="space-y-6"
-                >
-                    <h2 className="text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300 drop-shadow-[0_0_15px_rgba(34,211,238,0.3)] tracking-tight uppercase">
-                        {stats.PowerClass.title} 🌊
+                <div className="space-y-8">
+                    <h2 className={`text-6xl md:text-8xl font-black ${stats.PowerClass.color} tracking-tight uppercase drop-shadow-[0_10px_30px_rgba(0,0,0,0.5)]`}>
+                        {stats.PowerClass.title}
                     </h2>
-                    <p className="text-2xl text-gray-400 max-w-xl mx-auto font-medium">
-                        Embarking on an epic coding journey!
+                    <p className="text-2xl md:text-3xl text-slate-300 max-w-2xl mx-auto font-medium leading-relaxed opacity-90">
+                        &ldquo;{stats.PowerClass.description}&rdquo;
                     </p>
-                </motion.div>
-            </div>
+                </div>
+            </motion.div>
         </div>
     );
 }

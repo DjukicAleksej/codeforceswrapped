@@ -112,14 +112,14 @@ export default function StoryContainer({ stats, onComplete, onSkip }: StoryConta
             {/*BG MUSIC */}
             <BackgroundMusic />
 
-            <div className="relative w-full max-w-md md:max-w-xl h-full md:h-[90vh] md:rounded-3xl overflow-hidden bg-black/40 backdrop-blur-xl border-x md:border border-white/10 shadow-2xl flex flex-col">
+            <div className="relative w-full h-full md:rounded-NONE overflow-hidden bg-black/40 backdrop-blur-xl flex flex-col">
 
                 {/*Progress bars*/}
-                <div className="absolute top-0 left-0 right-0 flex gap-1.5 p-3 z-20 pt-4 md:pt-6 px-4">
+                <div className="absolute top-0 left-0 right-0 flex gap-2 p-4 z-30 pt-8 safe-area-top max-w-7xl mx-auto w-full">
                     {stories.map((_, idx) => (
-                        <div key={idx} className="h-1 flex-1 bg-white/10 rounded-full overflow-hidden backdrop-blur-sm">
+                        <div key={idx} className="h-1.5 flex-1 bg-white/20 rounded-full overflow-hidden backdrop-blur-md">
                             <motion.div
-                                className="h-full bg-white shadow-[0_0_10px_white]"
+                                className="h-full bg-white shadow-[0_0_15px_white]"
                                 initial={{ width: "0%" }}
                                 animate={{
                                     width: `${idx === currentPage ? progress : idx < currentPage ? 100 : 0}%`
@@ -131,12 +131,12 @@ export default function StoryContainer({ stats, onComplete, onSkip }: StoryConta
                 </div>
 
                 {/* Header Controls */}
-                <div className="absolute top-6 right-4 z-20 flex items-center gap-2">
+                <div className="absolute top-8 right-8 z-30 flex items-center gap-4">
                     <button
                         onClick={onSkip}
-                        className="p-2 rounded-full bg-black/20 hover:bg-white/10 text-white/50 hover:text-white transition-all backdrop-blur-md"
+                        className="p-3 rounded-full bg-black/40 hover:bg-white/10 text-white/70 hover:text-white transition-all backdrop-blur-xl border border-white/10"
                     >
-                        <X size={20} />
+                        <X size={28} />
                     </button>
                 </div>
 

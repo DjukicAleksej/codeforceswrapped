@@ -20,17 +20,26 @@ export default function BackgroundMusic() {
 
     // Attempt autoplay on mount, but respect browser policy
     useEffect(() => {
+        // Check if audio file exists is difficult client-side without request, 
+        // but we can handle the error.
         audioRef.current = new Audio('/audio/background-music.mp3');
         audioRef.current.loop = true;
         audioRef.current.volume = 0.3;
+
+        // Try to verify if it loads
+        audioRef.current.addEventListener('error', (e) => {
+            console.warn("Audio file not found or unsupported. Please ensure public/audio/background-music.mp3 exists.");
+            setIsPlaying(false);
+        });
 
         const playPromise = audioRef.current.play();
 
         if (playPromise !== undefined) {
             playPromise.then(() => {
                 setIsPlaying(true);
-            }).catch(() => {
-                // Autoplay was prevented.
+            }).catch((error) => {
+                // Autoplay was prevented or file missing
+                // Don't log error to console to avoid user panic, just set state
                 setIsPlaying(false);
             });
         }
