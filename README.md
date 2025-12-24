@@ -1,36 +1,83 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+🎯 Codeforces Wrapped
 
-## Getting Started
+Codeforces Wrapped is a web application inspired by Spotify Wrapped, but built for competitive programmers.
+It visualizes your Codeforces activity and turns raw stats into a clean, engaging summary of your journey.
 
-First, run the development server:
+Enter your Codeforces handle → get your programming year in review.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+🚀 What is this?
+
+If you grind Codeforces, you generate a ton of data — submissions, solved problems, ratings, contests.
+Codeforces Wrapped transforms that data into meaningful insights and visuals that help you reflect, improve, and flex a little.
+
+✨ Features
+
+📊 Total solved problems
+
+🧠 Problem difficulty breakdown
+
+🏆 Rating & contest performance overview
+
+⏱️ Submission activity insights
+
+🔥 Personal “grind” statistics
+
+🎨 Clean, modern UI inspired by Wrapped-style storytelling
+
+🛠️ How it works
+
+Enter your Codeforces handle
+
+The app fetches public data using the Codeforces API
+
+Your stats are processed and displayed in a visual, easy-to-understand format
+
+No login. No tracking. Just public data.
+
+🎯 Why I built this
+
+Competitive programming is about consistency and long-term growth.
+This project helps you:
+
+reflect on your progress,
+
+stay motivated,
+
+and better understand your strengths and weaknesses.
+
+Also — it’s a fun way to make stats feel human.
+
+🧑‍💻 Tech Stack
+
+HTML, CSS, JavaScript
+
+Codeforces Public API
+
+Vanilla JS (no heavy frameworks)
+
+📦 Getting Started
+``` bash
+git clone https://github.com/your-username/codeforces-wrapped.git
+cd codeforces-wrapped
+open index.html
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Or just deploy it on GitHub Pages.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+⚠️ Disclaimer
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+This project is not affiliated with Codeforces.
+All data is fetched from publicly available endpoints.
 
-## Learn More
+🌱 Future Ideas
 
-To learn more about Next.js, take a look at the following resources:
+Year-based Wrapped (2023 / 2024 / 2025)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Comparison with friends
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Contest streaks & milestones
 
-## Deploy on Vercel
+📬 Feedback
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Suggestions, issues, and pull requests are welcome.
+If you like the project, ⭐ the repo — it really helps.
