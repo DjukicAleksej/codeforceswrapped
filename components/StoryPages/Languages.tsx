@@ -18,47 +18,43 @@ export default function Languages({ stats, onNext }: LanguagesProps) {
   }, []);
 
   return (
-    <div className="h-full w-full flex items-center justify-center p-6 bg-gradient-to-br from-[#0f172a] via-[#1e1b4b] to-black">
-      <div className="max-w-2xl w-full space-y-8 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 30 }}
-          transition={{ duration: 0.8 }}
-          className="text-center space-y-2"
-        >
-          <h1 className="text-4xl md:text-5xl font-black font-heading tracking-tight text-white">
+    <div className="fixed inset-0 w-screen h-screen flex items-center justify-center p-6 bg-[#020617] overflow-hidden">
+      {/* Background Effects */}
+      <div className="absolute inset-0 bg-gradient-to-br from-pink-900/20 via-transparent to-purple-900/20 pointer-events-none" />
+
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95, y: 20 }}
+        animate={{ opacity: isVisible ? 1 : 0, scale: isVisible ? 1 : 0.95, y: isVisible ? 0 : 20 }}
+        transition={{ duration: 0.8, ease: "circOut" }}
+        className="glass-card max-w-7xl w-full p-8 md:p-16 flex flex-col items-center justify-center text-center space-y-12 relative z-10"
+      >
+        <div className="space-y-4">
+          <h1 className="text-5xl md:text-7xl font-black font-heading tracking-tighter text-white drop-shadow-2xl">
             Language Mastery
           </h1>
-          <p className="text-lg text-gray-400">The tools of your trade</p>
-        </motion.div>
+          <p className="text-xl md:text-2xl text-slate-400 font-light tracking-wide">
+            The tools of your trade
+          </p>
+        </div>
 
         <motion.div
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: isVisible ? 1 : 0.9, opacity: isVisible ? 1 : 0 }}
-          transition={{ delay: 0.2, duration: 0.8 }}
-          className="glass-card p-8 flex flex-col items-center text-center space-y-6 relative overflow-hidden group"
+          className="relative p-6 bg-pink-500/10 rounded-full ring-1 ring-pink-500/30 shadow-[0_0_50px_rgba(236,72,153,0.1)]"
+          animate={{ rotate: 360 }}
+          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
         >
-          <div className="absolute inset-0 bg-gradient-to-b from-pink-500/10 to-transparent opacity-50 group-hover:opacity-100 transition-opacity" />
-
-          <motion.div
-            className="relative p-4 bg-pink-500/20 rounded-full ring-1 ring-pink-500/50 shadow-[0_0_30px_rgba(236,72,153,0.3)]"
-            whileHover={{ rotate: 360, scale: 1.1 }}
-            transition={{ duration: 0.6 }}
-          >
-            <Code2 className="w-10 h-10 text-pink-400" />
-          </motion.div>
-
-          <div className="relative z-10">
-            <h2 className="text-xl font-bold text-gray-300 mb-1">Most Used</h2>
-            <p className="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400 text-glow">
-              {stats.topLanguage || "C++"}
-            </p>
-          </div>
+          <Code2 className="w-20 h-20 text-pink-400" />
         </motion.div>
+
+        <div className="space-y-2">
+          <h2 className="text-2xl font-bold text-slate-400 uppercase tracking-widest">Most Used</h2>
+          <p className="text-7xl md:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400 text-glow">
+            {stats.topLanguage || "C++"}
+          </p>
+        </div>
 
         {stats.languageStats && (
           <motion.div
-            className="grid grid-cols-2 gap-4"
+            className="grid grid-cols-2 gap-6 w-full max-w-4xl mt-8"
             initial="hidden"
             animate={isVisible ? "visible" : "hidden"}
             variants={{
@@ -70,10 +66,10 @@ export default function Languages({ stats, onNext }: LanguagesProps) {
               .slice(0, 4)
               .map(([language, count], index) => {
                 const gradients = [
-                  'from-purple-500/20 to-indigo-500/20 border-purple-500/30 text-purple-300',
-                  'from-blue-500/20 to-cyan-500/20 border-blue-500/30 text-blue-300',
-                  'from-emerald-500/20 to-teal-500/20 border-emerald-500/30 text-emerald-300',
-                  'from-orange-500/20 to-amber-500/20 border-orange-500/30 text-orange-300'
+                  'from-purple-500/10 to-indigo-500/10 border-purple-500/20 text-purple-300',
+                  'from-blue-500/10 to-cyan-500/10 border-blue-500/20 text-blue-300',
+                  'from-emerald-500/10 to-teal-500/10 border-emerald-500/20 text-emerald-300',
+                  'from-orange-500/10 to-amber-500/10 border-orange-500/20 text-orange-300'
                 ];
 
                 return (
@@ -83,21 +79,17 @@ export default function Languages({ stats, onNext }: LanguagesProps) {
                       hidden: { opacity: 0, y: 20 },
                       visible: { opacity: 1, y: 0 }
                     }}
-                    whileHover={{ scale: 1.02, translateY: -2 }}
-                    className={`bg-gradient-to-br ${gradients[index]} p-4 rounded-xl border backdrop-blur-sm shadow-lg flex flex-col justify-between h-32 relative overflow-hidden`}
+                    whileHover={{ scale: 1.02 }}
+                    className={`bg-gradient-to-br ${gradients[index]} p-6 rounded-2xl border backdrop-blur-md flex flex-col items-center justify-center space-y-2 relative overflow-hidden group hover:bg-white/5 transition-colors`}
                   >
-                    <div className="absolute -right-4 -bottom-4 w-24 h-24 bg-white/5 rounded-full blur-2xl pointer-events-none" />
-                    <p className="font-medium opacity-80 z-10">{language}</p>
-                    <div className="z-10">
-                      <p className="text-3xl font-bold text-white">{count}</p>
-                      <p className="text-xs opacity-60">submissions</p>
-                    </div>
+                    <p className="font-bold text-lg opacity-80">{language}</p>
+                    <p className="text-4xl font-black text-white">{count}</p>
                   </motion.div>
                 );
               })}
           </motion.div>
         )}
-      </div>
+      </motion.div>
     </div>
   );
 }
