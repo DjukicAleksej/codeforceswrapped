@@ -57,9 +57,9 @@ Vanilla JS (no heavy frameworks)
 
 📦 Getting Started
 ``` bash
-git clone https://github.com/your-username/codeforces-wrapped.git
+git clone https://github.com/DjukicAleksej/codeforceswrapped.git
 cd codeforces-wrapped
-open index.html
+npm run dev
 ```
 
 Or just deploy it on GitHub Pages.
