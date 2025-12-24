@@ -222,87 +222,93 @@ export default function WrappedPage() {
                     </div>
 
                     {/* Summary Card To Capture */}
-                    <div
-                        id="wrapped-summary"
-                        ref={wrapperRef}
-                        className="w-full bg-gradient-to-br from-[#1a1d24] to-black rounded-3xl overflow-hidden shadow-2xl border border-white/10 relative"
-                    >
-                        {/* Card Background */}
-                        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10" />
-                        <div className="absolute -top-20 -right-20 w-64 h-64 bg-primary/20 rounded-full blur-3xl pointer-events-none" />
-                        <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-purple-500/20 rounded-full blur-3xl pointer-events-none" />
+                    <div className="relative group perspective-1000">
+                        <div
+                            id="wrapped-summary"
+                            ref={wrapperRef}
+                            className="w-full bg-gradient-to-br from-[#1a1d24] to-black rounded-3xl overflow-hidden shadow-2xl border border-white/10 relative transition-transform duration-500 ease-out transform group-hover:scale-[1.01] group-hover:rotate-x-2 group-hover:rotate-y-2"
+                        >
+                            {/* Card Background */}
+                            <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10" />
+                            <div className="absolute -top-20 -right-20 w-64 h-64 bg-primary/20 rounded-full blur-3xl pointer-events-none animate-pulse-glow" />
+                            <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-purple-500/20 rounded-full blur-3xl pointer-events-none animate-pulse-glow delay-1000" />
 
-                        <div className="p-8 space-y-8 relative z-10">
-                            {/* Header */}
-                            <div className="flex items-center justify-between">
-                                <div>
-                                    <h2 className="text-sm font-bold text-gray-400 uppercase tracking-widest">Codeforces Wrapped</h2>
-                                    <h1 className="text-3xl font-black text-white mt-1">2025</h1>
-                                </div>
-                                <div className="p-2 bg-white/5 rounded-xl border border-white/5">
-                                    <Code2 className="w-8 h-8 text-white" />
-                                </div>
-                            </div>
-
-                            {/* Profile */}
-                            <div className="flex items-center gap-4 py-4 border-b border-white/10">
-                                <div className="relative w-24 h-24 rounded-full p-1 bg-gradient-to-br from-blue-500 to-purple-500">
-                                    <div className="relative w-full h-full rounded-full overflow-hidden bg-black">
-                                        {stats.profilePicture ? (
-                                            <Image
-                                                src={stats.profilePicture}
-                                                alt={stats.handle}
-                                                fill
-                                                className="object-cover"
-                                            />
-                                        ) : (
-                                            <div className="w-full h-full flex items-center justify-center bg-gray-800">
-                                                <span className="text-2xl font-bold">{stats.handle.substring(0, 2).toUpperCase()}</span>
-                                            </div>
-                                        )}
+                            <div className="p-8 space-y-8 relative z-10">
+                                {/* Header */}
+                                <div className="flex items-center justify-between">
+                                    <div>
+                                        <h2 className="text-sm font-bold text-gray-400 uppercase tracking-widest">Codeforces Wrapped</h2>
+                                        <h1 className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400 mt-1">2025</h1>
+                                    </div>
+                                    <div className="p-3 bg-white/5 rounded-2xl border border-white/10 shadow-inner">
+                                        <Code2 className="w-8 h-8 text-white" />
                                     </div>
                                 </div>
-                                <div>
-                                    <h3 className="text-2xl font-bold text-white">@{stats.handle}</h3>
-                                    <p className={`font-medium ${stats.rating.currentColor}`}>{stats.rating.currentRank}</p>
-                                    <div className="flex gap-2 mt-2">
-                                        <Badge className="bg-white/10 hover:bg-white/20 text-white border-none">
-                                            Peak: {stats.rating.maxRating}
-                                        </Badge>
+
+                                {/* Profile */}
+                                <div className="flex items-center gap-6 py-6 border-b border-white/10">
+                                    <div className="relative w-28 h-28 rounded-full p-1.5 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 shadow-xl">
+                                        <div className="relative w-full h-full rounded-full overflow-hidden bg-black border-4 border-black">
+                                            {stats.profilePicture ? (
+                                                <Image
+                                                    src={stats.profilePicture}
+                                                    alt={stats.handle}
+                                                    fill
+                                                    className="object-cover"
+                                                />
+                                            ) : (
+                                                <div className="w-full h-full flex items-center justify-center bg-gray-800">
+                                                    <span className="text-3xl font-bold">{stats.handle.substring(0, 2).toUpperCase()}</span>
+                                                </div>
+                                            )}
+                                        </div>
+                                        <div className="absolute bottom-0 right-0 bg-black rounded-full p-1.5 border border-white/20 shadow-lg">
+                                            <Trophy className="w-5 h-5 text-yellow-400" />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h3 className="text-3xl font-bold text-white tracking-tight">@{stats.handle}</h3>
+                                        <p className={`font-medium text-lg ${stats.rating.currentColor}`}>{stats.rating.currentRank}</p>
+                                        <div className="flex gap-2 mt-3">
+                                            <Badge className="bg-white/10 hover:bg-white/20 text-white border-white/10 backdrop-blur-md px-3 py-1 text-xs">
+                                                Peak: <span className="font-bold ml-1">{stats.rating.maxRating}</span>
+                                            </Badge>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            {/* Stats Grid */}
-                            <div className="grid grid-cols-2 gap-4">
-                                <div className="p-4 bg-white/5 rounded-2xl border border-white/5">
-                                    <p className="text-gray-400 text-xs mb-1">Problems Solved</p>
-                                    <p className="text-2xl font-bold text-white">{stats.problemsSolved}</p>
+                                {/* Stats Grid */}
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div className="p-5 bg-white/5 rounded-2xl border border-white/5 hover:bg-white/10 transition-colors">
+                                        <p className="text-gray-400 text-xs font-medium uppercase tracking-wider mb-2">Problems Solved</p>
+                                        <p className="text-3xl font-black text-white">{stats.problemsSolved}</p>
+                                    </div>
+                                    <div className="p-5 bg-white/5 rounded-2xl border border-white/5 hover:bg-white/10 transition-colors">
+                                        <p className="text-gray-400 text-xs font-medium uppercase tracking-wider mb-2">Total Submissions</p>
+                                        <p className="text-3xl font-black text-white">{stats.totalSubmissions}</p>
+                                    </div>
+                                    <div className="p-5 bg-white/5 rounded-2xl border border-white/5 hover:bg-white/10 transition-colors">
+                                        <p className="text-gray-400 text-xs font-medium uppercase tracking-wider mb-2">Active Streak</p>
+                                        <p className="text-3xl font-black text-white">{stats.longestStreak} <span className="text-lg font-normal text-gray-500">Days</span></p>
+                                    </div>
+                                    <div className="p-5 bg-white/5 rounded-2xl border border-white/5 hover:bg-white/10 transition-colors">
+                                        <p className="text-gray-400 text-xs font-medium uppercase tracking-wider mb-2">Top Language</p>
+                                        <p className="text-2xl font-black text-white truncate">{stats.topLanguage}</p>
+                                    </div>
                                 </div>
-                                <div className="p-4 bg-white/5 rounded-2xl border border-white/5">
-                                    <p className="text-gray-400 text-xs mb-1">Total Submissions</p>
-                                    <p className="text-2xl font-bold text-white">{stats.totalSubmissions}</p>
-                                </div>
-                                <div className="p-4 bg-white/5 rounded-2xl border border-white/5">
-                                    <p className="text-gray-400 text-xs mb-1">Active Streak</p>
-                                    <p className="text-2xl font-bold text-white">{stats.longestStreak} Days</p>
-                                </div>
-                                <div className="p-4 bg-white/5 rounded-2xl border border-white/5">
-                                    <p className="text-gray-400 text-xs mb-1">Top Language</p>
-                                    <p className="text-2xl font-bold text-white truncate">{stats.topLanguage}</p>
-                                </div>
-                            </div>
 
-                            {/* Power Class */}
-                            <div className="p-6 bg-gradient-to-r from-yellow-500/10 to-orange-500/10 rounded-2xl border border-yellow-500/20 text-center relative overflow-hidden">
-                                <div className="relative z-10">
-                                    <p className="text-yellow-500 text-xs font-bold uppercase tracking-widest mb-1">Power Level</p>
-                                    <h3 className={`text-3xl font-black ${stats.PowerClass.color}`}>{stats.PowerClass.title}</h3>
+                                {/* Power Class */}
+                                <div className="p-6 bg-gradient-to-r from-yellow-500/10 via-orange-500/5 to-red-500/10 rounded-2xl border border-yellow-500/20 text-center relative overflow-hidden">
+                                    <div className="absolute inset-0 bg-[url('/noise.png')] opacity-20 mix-blend-overlay"></div>
+                                    <div className="relative z-10">
+                                        <p className="text-yellow-500 text-xs font-bold uppercase tracking-[0.2em] mb-2">Power Level</p>
+                                        <h3 className={`text-4xl font-black ${stats.PowerClass.color} drop-shadow-lg`}>{stats.PowerClass.title}</h3>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div className="text-center">
-                                <p className="text-gray-500 text-xs">codeforces-wrapped.vercel.app</p>
+                                <div className="text-center pt-2">
+                                    <p className="text-gray-600 text-xs font-mono tracking-widest">codeforces-wrapped.vercel.app</p>
+                                </div>
                             </div>
                         </div>
                     </div>
