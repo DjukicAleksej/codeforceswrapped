@@ -304,81 +304,81 @@ export default function WrappedPage() {
                                 {/* Stats Grid Main */}
                                 <div className="grid grid-cols-2 gap-4">
                                     {/* Current Rating */}
-                                    <div className="bg-[#161b22] px-6 py-5 rounded-xl border-l-4 border-green-500 shadow-lg">
+                                    <div className="bg-[#161b22] px-6 py-5 rounded-xl border-l-4 border-[#22c55e] shadow-lg">
                                         <div className="flex items-center gap-2 mb-1">
-                                            <Trophy className="w-4 h-4 text-yellow-500" />
-                                            <span className="text-gray-400 text-xs font-bold uppercase">Current Rating</span>
+                                            <Trophy className="w-4 h-4 text-[#eab308]" />
+                                            <span className="text-[#9ca3af] text-xs font-bold uppercase">Current Rating</span>
                                         </div>
-                                        <div className="text-3xl font-black text-red-500">{stats.rating.current}</div>
-                                        <div className="text-xs text-red-400 font-medium">{stats.rating.currentRank}</div>
+                                        <div className="text-3xl font-black text-[#ef4444]">{stats.rating.current}</div>
+                                        <div className="text-xs text-[#f87171] font-medium">{stats.rating.currentRank}</div>
                                     </div>
 
                                     {/* Highest Rating */}
-                                    <div className="bg-[#1f1e1b] px-6 py-5 rounded-xl border-l-4 border-yellow-600 shadow-lg">
+                                    <div className="bg-[#1f1e1b] px-6 py-5 rounded-xl border-l-4 border-[#ca8a04] shadow-lg">
                                         <div className="flex items-center gap-2 mb-1">
-                                            <Crown className="w-4 h-4 text-orange-500" />
-                                            <span className="text-gray-400 text-xs font-bold uppercase">Highest Rating</span>
+                                            <Crown className="w-4 h-4 text-[#f97316]" />
+                                            <span className="text-[#9ca3af] text-xs font-bold uppercase">Highest Rating</span>
                                         </div>
-                                        <div className="text-3xl font-black text-red-500">{stats.rating.maxRating}</div>
-                                        <div className="text-xs text-red-400 font-medium">{stats.rating.maxRank}</div>
+                                        <div className="text-3xl font-black text-[#ef4444]">{stats.rating.maxRating}</div>
+                                        <div className="text-xs text-[#f87171] font-medium">{stats.rating.maxRank}</div>
                                     </div>
 
                                     {/* Universal Rank (Top 0.1%) */}
-                                    <div className="bg-[#1f1e1b] px-6 py-5 rounded-xl border-l-4 border-yellow-500 shadow-lg">
+                                    <div className="bg-[#1f1e1b] px-6 py-5 rounded-xl border-l-4 border-[#eab308] shadow-lg">
                                         <div className="flex items-center gap-2 mb-1">
-                                            <Crown className="w-4 h-4 text-yellow-500" />
-                                            <span className="text-gray-400 text-xs font-bold uppercase">Universal Rank</span>
+                                            <Crown className="w-4 h-4 text-[#eab308]" />
+                                            <span className="text-[#9ca3af] text-xs font-bold uppercase">Universal Rank</span>
                                         </div>
-                                        <div className="text-2xl font-black text-yellow-400">Top 0.1%</div>
+                                        <div className="text-2xl font-black text-[#facc15]">Top 0.1%</div>
                                     </div>
 
                                     {/* Longest Streak */}
-                                    <div className="bg-[#18161b] px-6 py-5 rounded-xl border-l-4 border-purple-500 shadow-lg">
+                                    <div className="bg-[#18161b] px-6 py-5 rounded-xl border-l-4 border-[#a855f7] shadow-lg">
                                         <div className="flex items-center gap-2 mb-1">
-                                            <Zap className="w-4 h-4 text-purple-400" />
-                                            <span className="text-gray-400 text-xs font-bold uppercase">Longest Streak</span>
+                                            <Zap className="w-4 h-4 text-[#c084fc]" />
+                                            <span className="text-[#9ca3af] text-xs font-bold uppercase">Longest Streak</span>
                                         </div>
-                                        <div className="text-2xl font-black text-purple-300">{stats.longestStreak} days</div>
+                                        <div className="text-2xl font-black text-[#d8b4fe]">{stats.longestStreak} days</div>
                                     </div>
                                 </div>
 
                                 {/* Secondary Stats */}
                                 <div className="grid grid-cols-2 gap-4">
-                                    <div className="bg-[#161b22] px-6 py-5 rounded-xl border-l-4 border-teal-500">
+                                    <div className="bg-[#161b22] px-6 py-5 rounded-xl border-l-4 border-[#14b8a6]">
                                         <div className="flex items-center gap-2 mb-2">
-                                            <Calendar className="w-4 h-4 text-teal-500" />
-                                            <span className="text-gray-400 text-xs font-bold">Most Active Day</span>
+                                            <Calendar className="w-4 h-4 text-[#14b8a6]" />
+                                            <span className="text-[#9ca3af] text-xs font-bold">Most Active Day</span>
                                         </div>
-                                        <div className="text-xl font-bold text-teal-400">{stats.mostActiveDay}</div>
+                                        <div className="text-xl font-bold text-[#2dd4bf]">{stats.mostActiveDay}</div>
                                     </div>
-                                    <div className="bg-[#1a161f] px-6 py-5 rounded-xl border-l-4 border-pink-500">
+                                    <div className="bg-[#1a161f] px-6 py-5 rounded-xl border-l-4 border-[#ec4899]">
                                         <div className="flex items-center gap-2 mb-2">
-                                            <Code2 className="w-4 h-4 text-pink-500" />
-                                            <span className="text-gray-400 text-xs font-bold">Top Language</span>
+                                            <Code2 className="w-4 h-4 text-[#ec4899]" />
+                                            <span className="text-[#9ca3af] text-xs font-bold">Top Language</span>
                                         </div>
-                                        <div className="text-xl font-bold text-pink-400 truncate">{stats.topLanguage}</div>
+                                        <div className="text-xl font-bold text-[#f472b6] truncate">{stats.topLanguage}</div>
                                     </div>
                                 </div>
 
                                 {/* Power Level Footer */}
-                                <div className="bg-[#111827] rounded-xl p-8 text-center border-t-4 border-blue-500 relative overflow-hidden">
+                                <div className="bg-[#111827] rounded-xl p-8 text-center border-t-4 border-[#3b82f6] relative overflow-hidden">
                                     <div className="relative z-10 space-y-2">
-                                        <p className="text-gray-500 text-xs font-bold uppercase tracking-widest">Power Level</p>
+                                        <p className="text-[#6b7280] text-xs font-bold uppercase tracking-widest">Power Level</p>
                                         <div className="flex justify-center items-center gap-3">
-                                            <h2 className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 uppercase">
+                                            <h2 className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#22d3ee] to-[#3b82f6] uppercase">
                                                 {stats.PowerClass.title}
                                             </h2>
                                             <span className="text-4xl">🌊</span>
                                         </div>
-                                        <p className="text-gray-400 text-sm">Embarking on an epic coding journey!</p>
+                                        <p className="text-[#9ca3af] text-sm">Embarking on an epic coding journey!</p>
                                     </div>
-                                    <div className="absolute top-0 right-0 text-gray-700 text-[10px] p-2">
+                                    <div className="absolute top-0 right-0 text-[#374151] text-[10px] p-2">
                                         {stats.totalSubmissions} submissions
                                     </div>
                                 </div>
 
                                 <div className="text-center pt-4 border-t border-white/5">
-                                    <p className="text-gray-600 text-[10px] font-mono tracking-widest uppercase">Created by @AleksejDjukic • codeforces-wrapped.vercel.app</p>
+                                    <p className="text-[#4b5563] text-[10px] font-mono tracking-widest uppercase">Created by @AleksejDjukic • codeforces-wrapped.vercel.app</p>
                                 </div>
                             </div>
                         </div>
