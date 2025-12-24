@@ -240,14 +240,16 @@ export default function WrappedPage() {
                             className="w-full bg-gradient-to-br from-[#1a1d24] to-black rounded-3xl overflow-hidden shadow-2xl border border-white/10 relative transition-transform duration-500 ease-out transform group-hover:scale-[1.01] group-hover:rotate-x-2 group-hover:rotate-y-2"
                         >
                             {/* Card Background */}
-                            <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10" />
-                            <div className="absolute -top-20 -right-20 w-64 h-64 bg-primary/20 rounded-full blur-3xl pointer-events-none animate-pulse-glow" />
-                            <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-purple-500/20 rounded-full blur-3xl pointer-events-none animate-pulse-glow delay-1000" />
+                            <div className="absolute inset-0 opacity-10" style={{ backgroundImage: "url('/grid.svg')" }} />
+                            {/* Replaced 'bg-primary/20' and 'bg-purple-500/20' with explicit RGBA/Hex to avoid oklch */}
+                            <div className="absolute -top-20 -right-20 w-64 h-64 rounded-full blur-3xl pointer-events-none animate-pulse-glow" style={{ backgroundColor: '#6366f133' }} />
+                            <div className="absolute -bottom-20 -left-20 w-64 h-64 rounded-full blur-3xl pointer-events-none animate-pulse-glow delay-1000" style={{ backgroundColor: '#a855f733' }} />
 
                             <div className="p-8 space-y-8 relative z-10 flex flex-col h-full">
                                 {/* Header: Avatar + Title */}
                                 <div className="flex flex-col items-center text-center space-y-4">
-                                    <div className="relative w-32 h-32 rounded-full p-1.5 bg-gradient-to-br from-white via-gray-200 to-gray-400 shadow-2xl">
+                                    {/* Replaced bg-gradient and shadow with inline styles */}
+                                    <div className="relative w-32 h-32 rounded-full p-1.5" style={{ background: 'linear-gradient(135deg, #ffffff, #e5e7eb, #9ca3af)', boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)' }}>
                                         <div className="relative w-full h-full rounded-full overflow-hidden bg-black border-4 border-white">
                                             {profilePictureUrl ? (
                                                 <Image
@@ -272,30 +274,30 @@ export default function WrappedPage() {
 
                                     <div>
                                         <h1 className="text-4xl font-black text-white tracking-tight">@{stats.handle}</h1>
-                                        <p className="text-xl text-purple-400 font-medium mt-1">2024 Year in Code</p>
+                                        <p className="text-xl font-medium mt-1" style={{ color: '#c084fc' }}>2024 Year in Code</p>
                                     </div>
                                 </div>
 
                                 {/* Contribution Graph (Simplified Visual) */}
-                                <div className="bg-[#161b22] p-6 rounded-xl border border-white/5 space-y-4">
-                                    <div className="flex justify-between items-end text-xs text-gray-400 mb-2">
+                                <div className="p-6 rounded-xl space-y-4" style={{ backgroundColor: '#161b22', borderColor: 'rgba(255,255,255,0.05)', borderWidth: '1px', borderStyle: 'solid' }}>
+                                    <div className="flex justify-between items-end text-xs mb-2" style={{ color: '#9ca3af' }}>
                                         <span>{stats.totalSubmissions} submissions in 2024</span>
                                     </div>
                                     <div className="flex flex-wrap gap-1 justify-center opacity-80">
                                         {/* Generating a visual pattern of squares since we don't have full calendar data mapped to UI yet */}
                                         {Array.from({ length: 147 }).map((_, i) => {
                                             // Mocking intensity for visual similarity to screenshot
-                                            const intensity = Math.random() > 0.8 ? 'bg-green-500' : Math.random() > 0.6 ? 'bg-green-700' : 'bg-[#2d333b]';
-                                            return <div key={i} className={`w-3 h-3 rounded-[2px] ${intensity}`} />
+                                            const intensityColor = Math.random() > 0.8 ? '#22c55e' : Math.random() > 0.6 ? '#15803d' : '#2d333b';
+                                            return <div key={i} className="w-3 h-3 rounded-[2px]" style={{ backgroundColor: intensityColor }} />
                                         })}
                                     </div>
-                                    <div className="flex justify-between text-xs text-gray-500 pt-2">
+                                    <div className="flex justify-between text-xs pt-2" style={{ color: '#6b7280' }}>
                                         <span>Less</span>
                                         <div className="flex gap-1">
-                                            <div className="w-3 h-3 bg-[#2d333b] rounded-[2px]" />
-                                            <div className="w-3 h-3 bg-green-900 rounded-[2px]" />
-                                            <div className="w-3 h-3 bg-green-700 rounded-[2px]" />
-                                            <div className="w-3 h-3 bg-green-500 rounded-[2px]" />
+                                            <div className="w-3 h-3 rounded-[2px]" style={{ backgroundColor: '#2d333b' }} />
+                                            <div className="w-3 h-3 rounded-[2px]" style={{ backgroundColor: '#14532d' }} />
+                                            <div className="w-3 h-3 rounded-[2px]" style={{ backgroundColor: '#15803d' }} />
+                                            <div className="w-3 h-3 rounded-[2px]" style={{ backgroundColor: '#22c55e' }} />
                                         </div>
                                         <span>More</span>
                                     </div>
@@ -304,81 +306,88 @@ export default function WrappedPage() {
                                 {/* Stats Grid Main */}
                                 <div className="grid grid-cols-2 gap-4">
                                     {/* Current Rating */}
-                                    <div className="bg-[#161b22] px-6 py-5 rounded-xl border-l-4 border-[#22c55e] shadow-lg">
+                                    <div className="px-6 py-5 rounded-xl border-l-4 shadow-lg" style={{ backgroundColor: '#161b22', borderColor: '#22c55e' }}>
                                         <div className="flex items-center gap-2 mb-1">
-                                            <Trophy className="w-4 h-4 text-[#eab308]" />
-                                            <span className="text-[#9ca3af] text-xs font-bold uppercase">Current Rating</span>
+                                            <Trophy className="w-4 h-4" style={{ color: '#eab308' }} />
+                                            <span className="text-xs font-bold uppercase" style={{ color: '#9ca3af' }}>Current Rating</span>
                                         </div>
-                                        <div className="text-3xl font-black text-[#ef4444]">{stats.rating.current}</div>
-                                        <div className="text-xs text-[#f87171] font-medium">{stats.rating.currentRank}</div>
+                                        <div className="text-3xl font-black" style={{ color: '#ef4444' }}>{stats.rating.current}</div>
+                                        <div className="text-xs font-medium" style={{ color: '#f87171' }}>{stats.rating.currentRank}</div>
                                     </div>
 
                                     {/* Highest Rating */}
-                                    <div className="bg-[#1f1e1b] px-6 py-5 rounded-xl border-l-4 border-[#ca8a04] shadow-lg">
+                                    <div className="px-6 py-5 rounded-xl border-l-4 shadow-lg" style={{ backgroundColor: '#1f1e1b', borderColor: '#ca8a04' }}>
                                         <div className="flex items-center gap-2 mb-1">
-                                            <Crown className="w-4 h-4 text-[#f97316]" />
-                                            <span className="text-[#9ca3af] text-xs font-bold uppercase">Highest Rating</span>
+                                            <Crown className="w-4 h-4" style={{ color: '#f97316' }} />
+                                            <span className="text-xs font-bold uppercase" style={{ color: '#9ca3af' }}>Highest Rating</span>
                                         </div>
-                                        <div className="text-3xl font-black text-[#ef4444]">{stats.rating.maxRating}</div>
-                                        <div className="text-xs text-[#f87171] font-medium">{stats.rating.maxRank}</div>
+                                        <div className="text-3xl font-black" style={{ color: '#ef4444' }}>{stats.rating.maxRating}</div>
+                                        <div className="text-xs font-medium" style={{ color: '#f87171' }}>{stats.rating.maxRank}</div>
                                     </div>
 
                                     {/* Universal Rank (Top 0.1%) */}
-                                    <div className="bg-[#1f1e1b] px-6 py-5 rounded-xl border-l-4 border-[#eab308] shadow-lg">
+                                    <div className="px-6 py-5 rounded-xl border-l-4 shadow-lg" style={{ backgroundColor: '#1f1e1b', borderColor: '#eab308' }}>
                                         <div className="flex items-center gap-2 mb-1">
-                                            <Crown className="w-4 h-4 text-[#eab308]" />
-                                            <span className="text-[#9ca3af] text-xs font-bold uppercase">Universal Rank</span>
+                                            <Crown className="w-4 h-4" style={{ color: '#eab308' }} />
+                                            <span className="text-xs font-bold uppercase" style={{ color: '#9ca3af' }}>Universal Rank</span>
                                         </div>
-                                        <div className="text-2xl font-black text-[#facc15]">Top 0.1%</div>
+                                        <div className="text-2xl font-black" style={{ color: '#facc15' }}>Top 0.1%</div>
                                     </div>
 
                                     {/* Longest Streak */}
-                                    <div className="bg-[#18161b] px-6 py-5 rounded-xl border-l-4 border-[#a855f7] shadow-lg">
+                                    <div className="px-6 py-5 rounded-xl border-l-4 shadow-lg" style={{ backgroundColor: '#18161b', borderColor: '#a855f7' }}>
                                         <div className="flex items-center gap-2 mb-1">
-                                            <Zap className="w-4 h-4 text-[#c084fc]" />
-                                            <span className="text-[#9ca3af] text-xs font-bold uppercase">Longest Streak</span>
+                                            <Zap className="w-4 h-4" style={{ color: '#c084fc' }} />
+                                            <span className="text-xs font-bold uppercase" style={{ color: '#9ca3af' }}>Longest Streak</span>
                                         </div>
-                                        <div className="text-2xl font-black text-[#d8b4fe]">{stats.longestStreak} days</div>
+                                        <div className="text-2xl font-black" style={{ color: '#d8b4fe' }}>{stats.longestStreak} days</div>
                                     </div>
                                 </div>
 
                                 {/* Secondary Stats */}
                                 <div className="grid grid-cols-2 gap-4">
-                                    <div className="bg-[#161b22] px-6 py-5 rounded-xl border-l-4 border-[#14b8a6]">
+                                    <div className="px-6 py-5 rounded-xl border-l-4" style={{ backgroundColor: '#161b22', borderColor: '#14b8a6' }}>
                                         <div className="flex items-center gap-2 mb-2">
-                                            <Calendar className="w-4 h-4 text-[#14b8a6]" />
-                                            <span className="text-[#9ca3af] text-xs font-bold">Most Active Day</span>
+                                            <Calendar className="w-4 h-4" style={{ color: '#14b8a6' }} />
+                                            <span className="text-xs font-bold" style={{ color: '#9ca3af' }}>Most Active Day</span>
                                         </div>
-                                        <div className="text-xl font-bold text-[#2dd4bf]">{stats.mostActiveDay}</div>
+                                        <div className="text-xl font-bold" style={{ color: '#2dd4bf' }}>{stats.mostActiveDay}</div>
                                     </div>
-                                    <div className="bg-[#1a161f] px-6 py-5 rounded-xl border-l-4 border-[#ec4899]">
+                                    <div className="px-6 py-5 rounded-xl border-l-4" style={{ backgroundColor: '#1a161f', borderColor: '#ec4899' }}>
                                         <div className="flex items-center gap-2 mb-2">
-                                            <Code2 className="w-4 h-4 text-[#ec4899]" />
-                                            <span className="text-[#9ca3af] text-xs font-bold">Top Language</span>
+                                            <Code2 className="w-4 h-4" style={{ color: '#ec4899' }} />
+                                            <span className="text-xs font-bold" style={{ color: '#9ca3af' }}>Top Language</span>
                                         </div>
-                                        <div className="text-xl font-bold text-[#f472b6] truncate">{stats.topLanguage}</div>
+                                        <div className="text-xl font-bold truncate" style={{ color: '#f472b6' }}>{stats.topLanguage}</div>
                                     </div>
                                 </div>
 
                                 {/* Power Level Footer */}
-                                <div className="bg-[#111827] rounded-xl p-8 text-center border-t-4 border-[#3b82f6] relative overflow-hidden">
+                                <div className="rounded-xl p-8 text-center relative overflow-hidden" style={{ backgroundColor: '#111827', borderTop: '4px solid #3b82f6' }}>
                                     <div className="relative z-10 space-y-2">
-                                        <p className="text-[#6b7280] text-xs font-bold uppercase tracking-widest">Power Level</p>
+                                        <p className="text-xs font-bold uppercase tracking-widest" style={{ color: '#6b7280' }}>Power Level</p>
                                         <div className="flex justify-center items-center gap-3">
-                                            <h2 className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#22d3ee] to-[#3b82f6] uppercase">
+                                            {/* Gradient Text for Power Level */}
+                                            <h2 className="text-4xl font-black uppercase" style={{
+                                                backgroundImage: 'linear-gradient(to right, #22d3ee, #3b82f6)',
+                                                WebkitBackgroundClip: 'text',
+                                                WebkitTextFillColor: 'transparent',
+                                                backgroundClip: 'text',
+                                                color: 'transparent'
+                                            }}>
                                                 {stats.PowerClass.title}
                                             </h2>
                                             <span className="text-4xl">🌊</span>
                                         </div>
-                                        <p className="text-[#9ca3af] text-sm">Embarking on an epic coding journey!</p>
+                                        <p className="text-sm" style={{ color: '#9ca3af' }}>Embarking on an epic coding journey!</p>
                                     </div>
-                                    <div className="absolute top-0 right-0 text-[#374151] text-[10px] p-2">
+                                    <div className="absolute top-0 right-0 text-[10px] p-2" style={{ color: '#374151' }}>
                                         {stats.totalSubmissions} submissions
                                     </div>
                                 </div>
 
-                                <div className="text-center pt-4 border-t border-white/5">
-                                    <p className="text-[#4b5563] text-[10px] font-mono tracking-widest uppercase">Created by @AleksejDjukic • codeforces-wrapped.vercel.app</p>
+                                <div className="text-center pt-4" style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+                                    <p className="text-[10px] font-mono tracking-widest uppercase" style={{ color: '#4b5563' }}>Created by @AleksejDjukic • codeforces-wrapped.vercel.app</p>
                                 </div>
                             </div>
                         </div>
