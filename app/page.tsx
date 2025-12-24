@@ -95,47 +95,48 @@ export default function Home() {
                 </div>
 
                 {/* Featured Section */}
-                <div className="py-24 space-y-12">
-                    <div className="text-center space-y-4">
-                        <h2 className="text-3xl font-bold font-heading">Hall of Fame</h2>
-                        <p className="text-gray-400">See how the legends performed this year</p>
+                <div className="py-24 space-y-16">
+                    <div className="text-center space-y-4 animate-on-scroll">
+                        <h2 className="text-4xl md:text-5xl font-black font-heading tracking-tight text-white">Hall of Fame</h2>
+                        <p className="text-xl text-gray-400">Legends of the arena</p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
                         {featuredUsers.map((user, i) => (
                             <Link
                                 key={user.handle}
                                 href={`/wrapped/${user.handle}`}
-                                className="group relative glass-card p-6 flex flex-col items-center text-center space-y-4 hover:-translate-y-2 hover:border-primary/50"
+                                className="group relative glass-card p-8 flex flex-col items-center text-center space-y-6 hover:-translate-y-2 transition-all duration-300 border border-white/5 hover:border-primary/50 overflow-hidden"
                             >
-                                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-xl" />
+                                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-all duration-500" />
 
-                                <div className="relative w-24 h-24 rounded-full p-1 bg-gradient-to-br from-gray-800 to-black group-hover:from-blue-500 group-hover:to-purple-500 transition-all duration-500">
-                                    <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-black">
+                                <div className="relative w-28 h-28 rounded-full p-1 bg-gradient-to-br from-gray-800 to-black group-hover:from-blue-500 group-hover:to-purple-500 transition-all duration-500 shadow-2xl">
+                                    <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-black bg-black">
                                         <Image
                                             src={user.image}
                                             alt={user.handle}
                                             fill
-                                            className="object-cover"
+                                            className="object-cover transition-transform duration-500 group-hover:scale-110"
+                                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                         />
                                     </div>
-                                    <div className="absolute -bottom-2 -right-2 bg-black border border-white/10 rounded-full p-1.5">
-                                        <TrendingUp className="w-4 h-4 text-green-400" />
+                                    <div className="absolute -bottom-2 -right-2 bg-black border border-white/10 rounded-full p-2 shadow-lg">
+                                        <TrendingUp className="w-5 h-5 text-green-400" />
                                     </div>
                                 </div>
 
-                                <div className="relative z-10">
-                                    <h3 className="text-lg font-bold text-white group-hover:text-primary transition-colors">{user.handle}</h3>
-                                    <div className="flex items-center justify-center gap-2 mt-1">
-                                        <span className={`w-2 h-2 rounded-full ${user.rating >= 3000 ? 'bg-red-500 shadow-[0_0_10px_red]' : 'bg-orange-500'}`} />
-                                        <p className="text-xs text-gray-400 font-medium">{user.description}</p>
+                                <div className="relative z-10 space-y-2">
+                                    <h3 className="text-xl font-bold text-white group-hover:text-primary transition-colors">{user.handle}</h3>
+                                    <div className="flex items-center justify-center gap-2">
+                                        <span className={`w-2.5 h-2.5 rounded-full ${user.rating >= 3000 ? 'bg-red-500 shadow-[0_0_10px_red]' : 'bg-orange-500'}`} />
+                                        <p className="text-sm text-gray-400 font-medium">{user.description}</p>
                                     </div>
                                 </div>
 
-                                <div className="w-full pt-4 border-t border-white/5 relative z-10">
+                                <div className="w-full pt-6 border-t border-white/5 relative z-10">
                                     <div className="flex justify-between items-center text-sm">
-                                        <span className="text-gray-500">Rating</span>
-                                        <span className="font-mono text-white font-bold">{user.rating}</span>
+                                        <span className="text-gray-500 uppercase tracking-wider text-xs font-bold">Rating</span>
+                                        <span className="font-mono text-white font-black text-lg">{user.rating}</span>
                                     </div>
                                 </div>
                             </Link>
