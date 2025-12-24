@@ -62,18 +62,14 @@ export default function WrappedPage() {
                 return;
             }
 
-            // Wait for images to load? They should be loaded.
             const canvas = await html2canvas(element, {
                 useCORS: true,
                 scale: 2,
                 backgroundColor: '#000000',
-                logging: true, // Help debug
-                allowTaint: true, // Allow tainted images (might break toDataURL if CORS fails)
-                foreignObjectRendering: false // sometimes causes issues
+                logging: false,
+                allowTaint: false,
             });
 
-            // If allowTaint is true, toDataURL might fail if valid CORS headers weren't received.
-            // But we try standard first.
             const link = document.createElement('a');
             link.download = `${handle}-wrapped-2025.png`;
             link.href = canvas.toDataURL('image/png');
@@ -81,8 +77,7 @@ export default function WrappedPage() {
             toast.success("Image downloaded!", { id: toastId });
         } catch (err) {
             console.error("Download failed:", err);
-            // Fallback: If simple CORS failed, try to proxy or warn
-            toast.error("Failed to download image. Tainted canvas or CORS issue.", { id: toastId });
+            toast.error("Failed to download image. Please try again.", { id: toastId });
         }
     };
 
@@ -206,6 +201,11 @@ export default function WrappedPage() {
         );
     }
 
+    // Use a proxy URL for the profile picture to ensure CORS headers are present for html2canvas
+    const profilePictureUrl = stats && stats.profilePicture
+        ? `/api/image-proxy?url=${encodeURIComponent(stats.profilePicture)}`
+        : null;
+
     return (
         <main className="min-h-screen bg-black text-white relative flex flex-col items-center justify-center p-4">
             {/* Background Effects */}
@@ -249,14 +249,14 @@ export default function WrappedPage() {
                                 <div className="flex flex-col items-center text-center space-y-4">
                                     <div className="relative w-32 h-32 rounded-full p-1.5 bg-gradient-to-br from-white via-gray-200 to-gray-400 shadow-2xl">
                                         <div className="relative w-full h-full rounded-full overflow-hidden bg-black border-4 border-white">
-                                            {stats.profilePicture ? (
+                                            {profilePictureUrl ? (
                                                 <Image
-                                                    src={stats.profilePicture}
+                                                    src={profilePictureUrl}
                                                     alt={stats.handle}
                                                     fill
                                                     className="object-cover"
-                                                    unoptimized // Critical for html2canvas to work well with Next.js images
-                                                    crossOrigin="anonymous" // Attempt to request CORS permission
+                                                    unoptimized
+                                                    priority
                                                 />
                                             ) : (
                                                 <div className="w-full h-full flex items-center justify-center bg-gray-800">
