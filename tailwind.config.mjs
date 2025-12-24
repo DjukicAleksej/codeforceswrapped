@@ -65,6 +65,36 @@ export default {
                     '4': 'hsl(var(--chart-4))',
                     '5': 'hsl(var(--chart-5))',
                 },
+                // Explicitly define standard colors to avoid oklab (which breaks framer-motion)
+                gray: {
+                    400: '#9ca3af',
+                    500: '#6b7280',
+                    600: '#4b5563',
+                    800: '#1f2937',
+                    900: '#111827',
+                },
+                blue: {
+                    500: '#3b82f6',
+                },
+                purple: {
+                    500: '#a855f7',
+                },
+                pink: {
+                    500: '#ec4899',
+                },
+                yellow: {
+                    400: '#facc15',
+                    500: '#eab308',
+                },
+                orange: {
+                    500: '#f97316',
+                },
+                red: {
+                    500: '#ef4444',
+                },
+                green: {
+                    400: '#4ade80',
+                },
             },
             keyframes: {
                 'accordion-down': {

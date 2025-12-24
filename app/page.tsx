@@ -70,25 +70,35 @@ export default function Home() {
                         </p>
                     </div>
 
-                    <div className="w-full max-w-md mx-auto relative group">
-                        <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
-                        <form onSubmit={generateWrapped} className="relative flex gap-2 p-2 bg-black/80 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl">
-                            <div className="relative flex-1">
-                                <Code2 className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                    <div className="w-full max-w-lg mx-auto relative group">
+                        <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
+                        <form onSubmit={generateWrapped} className="relative flex p-2 bg-black/50 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl items-center">
+                            <div className="relative flex-1 group/input">
+                                <Code2 className="absolute left-4 top-1/2 -translate-y-1/2 w-6 h-6 text-gray-500 group-focus-within/input:text-primary transition-colors" />
                                 <Input
                                     placeholder="Enter your Codeforces handle..."
                                     value={handle}
                                     onChange={(e) => setHandle(e.target.value)}
-                                    className="pl-10 h-12 bg-transparent border-none text-lg text-white placeholder:text-gray-500 focus-visible:ring-0 focus-visible:ring-offset-0"
+                                    className="pl-14 h-16 bg-transparent border-none text-xl text-white placeholder:text-gray-500 focus-visible:ring-0 focus-visible:ring-offset-0 font-medium"
                                 />
                             </div>
                             <Button
                                 type="submit"
                                 disabled={loading}
                                 size="lg"
-                                className="h-12 px-8 bg-white text-black hover:bg-gray-200 font-bold tracking-wide transition-all duration-300"
+                                className="h-14 px-8 ml-2 bg-white text-black hover:bg-gray-200 font-bold tracking-wide transition-all duration-300 rounded-xl shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)]"
                             >
-                                {loading ? 'Loading...' : 'Generate'}
+                                {loading ? (
+                                    <div className="flex items-center gap-2">
+                                        <div className="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin" />
+                                        <span>Loading</span>
+                                    </div>
+                                ) : (
+                                    <div className="flex items-center gap-2">
+                                        <span>Generate</span>
+                                        <ArrowRight className="w-5 h-5" />
+                                    </div>
+                                )}
                             </Button>
                         </form>
                     </div>

@@ -18,72 +18,58 @@ export default function RatingJourney({ stats, onNext }: RatingJourneyProps) {
         setIsVisible(true);
     }, []);
     return (
-        <div className="h-full w-full flex items-center justify-center p-6 bg-gradient-to-br from-[#172554] via-[#020617] to-black">
-            <div className="max-w-2xl w-full space-y-10 relative z-10">
+        <div className="h-full w-full flex items-center justify-center p-6 bg-black">
+            <div className="max-w-5xl w-full space-y-16 relative z-10">
                 <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 30 }}
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : -20 }}
                     transition={{ duration: 0.8 }}
-                    className="text-center space-y-2"
+                    className="text-center space-y-4"
                 >
-                    <h1 className="text-4xl md:text-5xl font-black font-heading tracking-tight text-white">
+                    <h1 className="text-5xl md:text-6xl font-black font-heading tracking-tight text-white/90">
                         Rating Journey
                     </h1>
-                    <p className="text-lg text-gray-400">Climbing the leaderboards</p>
+                    <p className="text-xl text-gray-400 font-medium">Your competitive achievements</p>
                 </motion.div>
 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
                     {/*current rating tile*/}
                     <motion.div
-                        initial={{ scale: 0.9, opacity: 0 }}
-                        animate={{ scale: isVisible ? 1 : 0.9, opacity: isVisible ? 1 : 0 }}
+                        initial={{ opacity: 0, x: -50 }}
+                        animate={{ opacity: isVisible ? 1 : 0, x: isVisible ? 0 : -50 }}
                         transition={{ delay: 0.3, duration: 0.8 }}
-                        whileHover={{ scale: 1.02 }}
-                        className="glass-card p-6 flex flex-col items-center justify-center space-y-4 border-blue-500/20 bg-blue-500/5 group"
+                        className="bg-[#1e2540] rounded-3xl p-10 flex flex-col items-center text-center space-y-8 shadow-2xl border border-white/5"
                     >
-                        <motion.div
-                            className="p-4 bg-blue-500/20 rounded-full shadow-[0_0_20px_rgba(59,130,246,0.2)]"
-                            whileHover={{ rotate: 360, scale: 1.1 }}
-                            transition={{ duration: 0.6 }}
-                        >
-                            <TrendingUp className="w-8 h-8 text-blue-400" />
-                        </motion.div>
+                        <div className="w-24 h-24 rounded-full bg-[#2d3a6e] flex items-center justify-center">
+                            <TrendingUp className="w-10 h-10 text-blue-400" />
+                        </div>
 
-                        <div className="text-center">
-                            <p className="text-blue-300/60 text-xs font-bold uppercase tracking-widest mb-2">Current</p>
-                            <h2 className={`text-4xl font-black ${stats.rating.currentColor} drop-shadow-lg`}>
+                        <div className="space-y-4">
+                            <p className="text-blue-200 text-lg font-medium">Current Rating</p>
+                            <h2 className={`text-6xl font-black ${stats.rating.currentColor}`}>
                                 {stats.rating.current}
                             </h2>
-                            <p className={`text-sm mt-1 text-gray-300 font-medium opacity-80 group-hover:opacity-100 transition-opacity`}>
-                                {stats.rating.currentRank}
-                            </p>
+                            <p className="text-lg text-[#dbeafe]">{stats.rating.currentRank}</p>
                         </div>
                     </motion.div>
 
                     {/* max rating tile */}
                     <motion.div
-                        initial={{ scale: 0.9, opacity: 0 }}
-                        animate={{ scale: isVisible ? 1 : 0.9, opacity: isVisible ? 1 : 0 }}
+                        initial={{ opacity: 0, x: 50 }}
+                        animate={{ opacity: isVisible ? 1 : 0, x: isVisible ? 0 : 50 }}
                         transition={{ delay: 0.4, duration: 0.8 }}
-                        whileHover={{ scale: 1.02 }}
-                        className="glass-card p-6 flex flex-col items-center justify-center space-y-4 border-orange-500/20 bg-orange-500/5 group"
+                        className="bg-[#321313] rounded-3xl p-10 flex flex-col items-center text-center space-y-8 shadow-2xl border border-white/5"
                     >
-                        <motion.div
-                            className="p-4 bg-orange-500/20 rounded-full shadow-[0_0_20px_rgba(249,115,22,0.2)]"
-                            whileHover={{ rotate: 360, scale: 1.1 }}
-                            transition={{ duration: 0.6 }}
-                        >
-                            <Trophy className="w-8 h-8 text-orange-400" />
-                        </motion.div>
+                        <div className="w-24 h-24 rounded-full bg-[#521b1b] flex items-center justify-center">
+                            <Trophy className="w-10 h-10 text-[#fca5a5]" />
+                        </div>
 
-                        <div className="text-center">
-                            <p className="text-orange-300/60 text-xs font-bold uppercase tracking-widest mb-2">Peak</p>
-                            <h2 className={`text-4xl font-black ${stats.rating.maxColor} drop-shadow-lg`}>
+                        <div className="space-y-4">
+                            <p className="text-[#fecaca] text-lg font-medium">Max Rating</p>
+                            <h2 className={`text-6xl font-black ${stats.rating.maxColor}`}>
                                 {stats.rating.maxRating}
                             </h2>
-                            <p className={`text-sm mt-1 text-gray-300 font-medium opacity-80 group-hover:opacity-100 transition-opacity`}>
-                                {stats.rating.maxRank}
-                            </p>
+                            <p className="text-lg text-[#fecaca]">{stats.rating.maxRank}</p>
                         </div>
                     </motion.div>
                 </div>
