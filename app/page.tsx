@@ -61,7 +61,7 @@ export default function Home() {
                         <h1 className="text-7xl md:text-9xl font-black font-heading tracking-tighter text-white leading-[0.9] drop-shadow-2xl">
                             UNWRAP YOUR <br />
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-violet-400 to-cyan-400 animate-pulse-glow">
-                                CP LEGACY
+                                Competitive Programming LEGACY
                             </span>
                         </h1>
 
